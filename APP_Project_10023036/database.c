@@ -68,7 +68,7 @@ void restore(struct Passenger** head) {
 			//printf("%s", line);
 
 			printf("FOUND PASSENGER");
-			fscanf(dbFilePtr, " %d %s %s %d %s %d %d %d %d\n",
+			fscanf(dbFilePtr, "%d %s %s %d %s %d %d %d %d",
 				&newPassenger->passportNumber,
 				newPassenger->firstName,
 				newPassenger->lastName,
