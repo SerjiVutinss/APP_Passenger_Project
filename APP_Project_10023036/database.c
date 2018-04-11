@@ -9,7 +9,9 @@ FILE* dbFilePtr = NULL;
 
 void backup(struct Passenger* head) {
 	printf("\nOpening DB!!!\n");
-	struct Passenger* curr; // pointer to current passenger
+	struct Passenger* curr = NULL; // pointer to current passenger
+	//curr = (struct Passenger*)malloc(sizeof(struct Passenger*));
+
 	dbFilePtr = fopen("database.txt", "w");
 	if (dbFilePtr != NULL) {
 		printf("\nDatabase File Opened!!!\n");
@@ -32,21 +34,25 @@ void backup(struct Passenger* head) {
 					curr->tripsPerYear,
 					curr->tripAvgDuration
 				);
-				if (curr->NEXT != NULL) {
+				printf("\nPassenger passport# %d backed up", curr->passportNumber);
+				if (curr != NULL) {
 					fprintf(dbFilePtr, "\n");
 				}
 				curr = curr->NEXT; // move along the list
 			}
 			printf("\nAll database records saved\n"); // finished displaying
+			fclose(dbFilePtr);
+			printf("\nDatabase File Closed!!!\n");
 		}
 		else {
 			printf("The database is empty, nothing to save\n"); // no records found
+			fclose(dbFilePtr);
+			printf("\nDatabase File Closed!!!\n");
 		}
 	}
 	else {
 		printf("File could not be opened\n"); // no records found
 	}
-	fclose(dbFilePtr);
 	dbFilePtr = NULL;
 }
 
@@ -54,21 +60,16 @@ void restore(struct Passenger** head) {
 
 	char line[100];
 
-	struct Passenger* newPassenger; // declare and allocate new Passenger
-	newPassenger = (struct Passenger*)malloc(sizeof(struct Passenger*));
-
+	struct Passenger* newPassenger = NULL; // declare and allocate new Passenger
+	//newPassenger = (struct Passenger*)malloc(sizeof(struct Passenger*));
 	dbFilePtr = fopen("database.txt", "r");
 	if (dbFilePtr != NULL) {
 		printf("\nDatabase File Opened!!!\n");
 
 		while (!feof(dbFilePtr)) { // while we are not at the end of the file
+			newPassenger = (struct Passenger*)malloc(sizeof(struct Passenger));
 			// read in one passenger per line
-
-			//fgets(line, sizeof(line), dbFilePtr);
-			//printf("%s", line);
-
-			printf("FOUND PASSENGER");
-			fscanf(dbFilePtr, "%d %s %s %d %s %d %d %d %d",
+			fscanf(dbFilePtr, "%d %s %s %d %s %d %d %d %d\n",
 				&newPassenger->passportNumber,
 				newPassenger->firstName,
 				newPassenger->lastName,
@@ -82,22 +83,34 @@ void restore(struct Passenger** head) {
 			displayPassenger(newPassenger);
 			insert(head, newPassenger);
 
-			newPassenger = (struct Passenger*)malloc(sizeof(struct Passenger*));
 		}
 		printf("\nAll database records read from file\n"); // finished reading
+		fclose(dbFilePtr);
 	}
 
 	else {
 		printf("The database file is empty, nothing to read\n"); // no records found
 	}
-	fclose(dbFilePtr);
 	dbFilePtr = NULL;
 }
 
-void insert(struct Passenger** head, struct Passenger* passengerToInsert) {
+//void readFileLines() {
+//	char * line = NULL;
+//
+//	dbFilePtr = fopen("database.txt", "r");
+//	int count = 0;
+//
+//	while (!feof(dbFilePtr)) {
+//		fgets(line, 120, dbFilePtr);
+//		count++;
+//	}
+//	printf("Count: %d", count);
+//}
 
-	struct Passenger* newPassenger; // declare and allocate new Passenger
-	newPassenger = passengerToInsert;
+void insert(struct Passenger** head, struct Passenger* newPassenger) {
+
+	//struct Passenger* newPassenger; // declare and allocate new Passenger
+	//newPassenger = passengerToInsert;
 
 	if (passengerPassportExists(*head, newPassenger->passportNumber) == -1) {
 
@@ -120,10 +133,10 @@ void insert(struct Passenger** head, struct Passenger* passengerToInsert) {
 			newPassenger->NEXT = curr->NEXT;
 			curr->NEXT = newPassenger;
 		}
-		printf("\n\nPassenger inserted!!!!");
+		printf("\n\nPassenger inserted!!!!\n");
 	}
 	else {
-		printf("Cannot insert, Passport number already in database");
+		printf("Cannot insert, Passport number (%d) already in database", newPassenger->passportNumber);
 	}
 }
 
@@ -378,17 +391,23 @@ void displayList(struct Passenger* head) {
 
 // display the supplied passenger's details
 void displayPassenger(struct Passenger* passenger) {
-	printf("\tPassport Number: %d\n", passenger->passportNumber);
-	printf("\tFirst Name: %s\n", passenger->firstName);
-	printf("\tLast Name: %s\n", passenger->lastName);
-	printf("\tYear Born: %d\n", passenger->yearBorn);
-	printf("\tLast Name: %s\n", passenger->email);
+
+	int padLen = 35;
+	const char *padding = "                                                                     ";
+
+	printf("\t|-------------------------------------------------------------------------\n");
+	printf("\t|    Passport Number: %d\n", passenger->passportNumber, padLen);
+	printf("\t|         First Name: %s\n", passenger->firstName, padLen);
+	printf("\t|          Last Name: %s\n", passenger->lastName, padLen);
+	printf("\t|          Year Born: %d\n", passenger->yearBorn, padLen);
+	printf("\t|          Last Name: %s\n", passenger->email, padLen);
 
 	// get item and print string from each array using the stored indices
-	printf("\tTravelled From: %s\n", travelAreas[passenger->travelledFrom].value);
-	printf("\tTravel Class: %s\n", travelClasses[passenger->travelClass].value);
-	printf("\tTrips Per Year: %s\n", tripsPerYear[passenger->tripsPerYear].message);
-	printf("\tAvg. Trip Duration: %s\n", tripDuration[passenger->tripAvgDuration].message);
+	printf("\t|     Travelled From: %s\n", travelAreas[passenger->travelledFrom].value, padLen);
+	printf("\t|       Travel Class: %s\n", travelClasses[passenger->travelClass].value, padLen);
+	printf("\t|     Trips Per Year: %s\n", tripsPerYear[passenger->tripsPerYear].message, padLen);
+	printf("\t| Avg. Trip Duration: %s\n", tripDuration[passenger->tripAvgDuration].message, padLen);
+	printf("\t|-------------------------------------------------------------------------\n");
 }
 
 

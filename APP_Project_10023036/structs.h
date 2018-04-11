@@ -11,6 +11,7 @@
 
 // initialise and populate the helper arrays with data
 void initialiseArrays();
+int isValidEmail(char emailAddress[]);
 
 typedef struct User {
 	char username[USERNAME_MAX_LEN];

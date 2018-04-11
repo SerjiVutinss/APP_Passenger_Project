@@ -1,8 +1,10 @@
 #ifndef DATABASE
 #define DATABASE
 
+//void readFileLines();
+
 void backup(struct Passenger* head);
-void restore(struct Passenger* head);
+void restore(struct Passenger** head);
 
 // inserts a passenger at the correct position in the sorted list
 void insert(struct Passenger** head, struct Passenger* passenger);

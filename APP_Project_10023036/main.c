@@ -37,6 +37,12 @@ int main() {
 
 	initialiseArrays();
 
+	char email1[25] = "jservis";
+	char email2[25] = "a.com@gmail";
+
+	printf("\n%s is %d", email1, isValidEmail(email1));
+	printf("\n%s is %d", email2, isValidEmail(email2));
+
 	restore(&headPtr);
 
 	////// start login loop
