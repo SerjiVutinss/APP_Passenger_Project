@@ -4,6 +4,58 @@
 #include<stdio.h>
 #include<string.h>
 
+// method only run from this file
+static void showReport(
+	int totalCount,
+	int countUK,
+	int countEurope,
+	int countAsia,
+	int countAfrica,
+	int countAmericas,
+	int countAustralasia,
+	int countOneDay,
+	int countLessThanThreeDays,
+	int countLessThanSevenDays,
+	int countMoreThanSevenDays
+) {
+
+	float totalPercent = 100.0f;
+	float percentUK = 0;
+	float percentEurope = 0;
+	float percentAsia = 0;
+	float percentAfrica = 0;
+	float percentAmericas = 0;
+	float percentAustralasia = 0;
+	float percentOneDay = 0;
+	float percentLessThanThreeDays = 0;
+	float percentLessThanSevenDays = 0;
+	float percentMoreThanSevenDays = 0;
+
+	printf("%.2f\n\n", (float)countUK / (float)totalCount * totalPercent);
+	printf("%.2f\n", (float)countEurope / (float)totalCount * totalPercent);
+	printf("%.2f\n", (float)countAsia / (float)totalCount * totalPercent);
+	printf("%.2f\n", (float)countAfrica / (float)totalCount * totalPercent);
+	printf("%.2f\n", (float)countAmericas / (float)totalCount * totalPercent);
+	printf("%.2f\n", (float)countAustralasia / (float)totalCount * totalPercent);
+	printf("%.2f\n", (float)countOneDay / (float)totalCount * totalPercent);
+	printf("%.2f\n", (float)countLessThanThreeDays / (float)totalCount * totalPercent);
+	printf("%.2f\n", (float)countLessThanSevenDays / (float)totalCount * totalPercent);
+	printf("%.2f\n", (float)countMoreThanSevenDays / (float)totalCount * totalPercent);
+
+	printf("%d %d %d %d %d %d %d %d %d %d", totalCount,
+		countUK,
+		countEurope,
+		countAsia,
+		countAfrica,
+		countAmericas,
+		countAustralasia,
+		countOneDay,
+		countLessThanThreeDays,
+		countLessThanSevenDays,
+		countMoreThanSevenDays);
+
+}
+
 void runTravelClassReports(struct Passenger* head, int travelClassType) {
 
 	int totalCount = 0;
@@ -18,12 +70,13 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 	int countLessThanSevenDays = 0;
 	int countMoreThanSevenDays = 0;
 
-
+	travelClassType--;
 	struct Passenger* curr; // pointer to current passenger
 	curr = head; // set the current equal to the head
 
 	if (curr != NULL) { // if list is not empty
 		printf("\n");
+
 		while (curr != NULL) { // while we are not at the ened of the list
 			// check for supplied travel class type
 			if (curr->travelClass == travelClassType) {
@@ -75,10 +128,37 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 
 
 			curr = curr->NEXT; // move along the list
-		}
-		printf("\nAll database records displayed\n"); // finished displaying
+		} // end while
+
+		printf("%d %d %d %d %d %d %d %d %d %d", totalCount,
+			countUK,
+			countEurope,
+			countAsia,
+			countAfrica,
+			countAmericas,
+			countAustralasia,
+			countOneDay,
+			countLessThanThreeDays,
+			countLessThanSevenDays,
+			countMoreThanSevenDays);
+
+		printf("\nShowing Travel Class Report:\n"); // finished displaying
+		showReport(
+			totalCount,
+			countUK,
+			countEurope,
+			countAsia,
+			countAfrica,
+			countAmericas,
+			countAustralasia,
+			countOneDay,
+			countLessThanThreeDays,
+			countLessThanSevenDays,
+			countMoreThanSevenDays
+		);
 	}
 	else {
 		printf("The database is empty\n"); // no records found
 	}
 }
+

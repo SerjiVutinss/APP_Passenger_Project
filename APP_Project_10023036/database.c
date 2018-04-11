@@ -400,7 +400,7 @@ void displayPassenger(struct Passenger* passenger) {
 	printf("\t|         First Name: %s\n", passenger->firstName, padLen);
 	printf("\t|          Last Name: %s\n", passenger->lastName, padLen);
 	printf("\t|          Year Born: %d\n", passenger->yearBorn, padLen);
-	printf("\t|          Last Name: %s\n", passenger->email, padLen);
+	printf("\t|              Email: %s\n", passenger->email, padLen);
 
 	// get item and print string from each array using the stored indices
 	printf("\t|     Travelled From: %s\n", travelAreas[passenger->travelledFrom].value, padLen);

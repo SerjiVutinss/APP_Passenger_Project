@@ -15,6 +15,7 @@
 #include "structs.h" // the data structures and globals used all across the program
 #include "login.h" // the login module handles all login related tasks
 #include "database.h" // linked list (database) operations
+#include "reports.h" // reporting related functions
 
   // will be used to read the login_details.txt file
 User* users; // will be used to contain all users read in from the file
@@ -137,6 +138,9 @@ int main() {
 						}
 
 					} while (travelClassType < 1 || travelClassType > NUM_TRAVEL_CLASSES);
+
+					// valid travel class selected - run report
+					runTravelClassReports(headPtr, travelClassType);
 				}
 				else if (reportType == 2) {
 					// born before 1980
