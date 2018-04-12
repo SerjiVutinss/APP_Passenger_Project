@@ -41,17 +41,17 @@ void initialiseArrays() {
 	tripsPerYear[0].key = 0;
 	tripsPerYear[0].minVal = 0;
 	tripsPerYear[0].maxVal = 2;
-	strcpy(tripsPerYear[0].message, "Less than three times per year");
+	strcpy(tripsPerYear[0].message, "Less than 3 times");
 
 	tripsPerYear[1].key = 1;
 	tripsPerYear[1].minVal = 3;
 	tripsPerYear[1].maxVal = 5;
-	strcpy(tripsPerYear[1].message, "Less than five times per year");
+	strcpy(tripsPerYear[1].message, "Less than 5 times");
 
 	tripsPerYear[2].key = 2;
 	tripsPerYear[2].minVal = 5;
 	tripsPerYear[2].maxVal = INT_MAX;
-	strcpy(tripsPerYear[2].message, "More than five times per year");
+	strcpy(tripsPerYear[2].message, "More than 5 times");
 
 	// trip duration
 	tripDuration[0].key = 0;

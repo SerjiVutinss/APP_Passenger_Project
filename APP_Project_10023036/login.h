@@ -1,9 +1,9 @@
-#ifndef LOGIN
-#define LOGIN
+#ifndef LOGIN_H
+#define LOGIN_H
 
 void runLoginLoop(); // the only function to be exposed from this module
 
 static int readUserDetailsFromFile();
 static int checkLoginDetails(char username[], char password[], int numUsers);
 
-#endif LOGIN
+#endif // LOGIN_H

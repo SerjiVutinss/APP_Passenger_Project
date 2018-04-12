@@ -58,7 +58,7 @@ void backup(struct Passenger* head) {
 
 void restore(struct Passenger** head) {
 
-	char line[100];
+	int count = 0; // keep a count of records added
 
 	struct Passenger* newPassenger = NULL; // declare and allocate new Passenger
 	//newPassenger = (struct Passenger*)malloc(sizeof(struct Passenger*));
@@ -80,11 +80,12 @@ void restore(struct Passenger** head) {
 				&newPassenger->tripsPerYear,
 				&newPassenger->tripAvgDuration);
 
-			displayPassenger(newPassenger);
-			insert(head, newPassenger);
+			//displayPassenger(newPassenger); // used for testing and debugging
+			insert(head, newPassenger); // insert the passenger details into the ordered linked list
+			count++; // increment the count
 
 		}
-		printf("\nAll database records read from file\n"); // finished reading
+		printf("\n%d database records read from file\n", count); // finished reading
 		fclose(dbFilePtr);
 	}
 
@@ -109,13 +110,13 @@ void restore(struct Passenger** head) {
 
 void insert(struct Passenger** head, struct Passenger* newPassenger) {
 
-	//struct Passenger* newPassenger; // declare and allocate new Passenger
-	//newPassenger = passengerToInsert;
+	struct Passenger* curr;
 
 	if (passengerPassportExists(*head, newPassenger->passportNumber) == -1) {
 
-		printf("\nInserting %d", newPassenger->passportNumber);
-		struct Passenger* curr;
+		if (DEBUG_ON) {
+			printf("\nInserting %d", newPassenger->passportNumber); // debugging
+		}
 		// if list is empty OR if the new passport number is less than the existing head
 		if (*head == NULL || newPassenger->passportNumber <= (*head)->passportNumber) {
 			// insert at head
@@ -133,7 +134,9 @@ void insert(struct Passenger** head, struct Passenger* newPassenger) {
 			newPassenger->NEXT = curr->NEXT;
 			curr->NEXT = newPassenger;
 		}
-		printf("\n\nPassenger inserted!!!!\n");
+		if (DEBUG_ON) {
+			printf("\n\nPassenger inserted!!!!\n"); // debugging
+		}
 	}
 	else {
 		printf("Cannot insert, Passport number (%d) already in database", newPassenger->passportNumber);
@@ -192,15 +195,13 @@ struct Passenger* inputPassenger(int passportNumber) {
 		printf("\nPlease select: ");
 		scanf("%d", &userChoice);
 
-		if (!(userChoice > 0 && userChoice <= NUM_TRAVEL_AREAS)) {
+		if (userChoice <= 0 || userChoice > NUM_TRAVEL_AREAS) {
 			printf("\nThat was not a valid selection, please try again");
-		}
-		else {
-			userChoice == -1;
+			userChoice = -1;
 		}
 
 	} while (userChoice == -1);
-	newPassenger->travelledFrom = userChoice - 1;
+	newPassenger->travelledFrom = userChoice - 1; // offset since we need the array index
 	userChoice = -1; // reset this variable for reuse
 
 	// select travel class
@@ -212,11 +213,9 @@ struct Passenger* inputPassenger(int passportNumber) {
 		printf("\nPlease select: ");
 		scanf("%d", &userChoice);
 
-		if (!(userChoice > 0 && userChoice <= NUM_TRAVEL_CLASSES)) {
+		if (userChoice <= 0 || userChoice > NUM_TRAVEL_CLASSES) {
 			printf("\nThat was not a valid selection, please try again");
-		}
-		else {
-			userChoice == -1;
+			userChoice = -1;
 		}
 
 	} while (userChoice == -1);
@@ -232,11 +231,9 @@ struct Passenger* inputPassenger(int passportNumber) {
 		printf("\nPlease select: ");
 		scanf("%d", &userChoice);
 
-		if (!(userChoice > 0 && userChoice <= NUM_TRIPS_PER_YEAR)) {
+		if (userChoice <= 0 || userChoice > NUM_TRIPS_PER_YEAR) {
 			printf("\nThat was not a valid selection, please try again");
-		}
-		else {
-			userChoice == -1;
+			userChoice = -1;
 		}
 
 	} while (userChoice == -1);
@@ -252,11 +249,9 @@ struct Passenger* inputPassenger(int passportNumber) {
 		printf("\nPlease select: ");
 		scanf("%d", &userChoice);
 
-		if (!(userChoice > 0 && userChoice <= NUM_TRIP_DURATION)) {
+		if (userChoice <= 0 || userChoice > NUM_TRIP_DURATION) {
 			printf("\nThat was not a valid selection, please try again");
-		}
-		else {
-			userChoice == -1;
+			userChoice = -1;
 		}
 
 	} while (userChoice == -1);
@@ -374,15 +369,19 @@ struct Passenger* getPassengerByIndex(struct Passenger* head, int index) {
 void displayList(struct Passenger* head) {
 
 	struct Passenger* curr; // pointer to current passenger
+	int count = 0; // used to display the number in the list
 	curr = head; // set the current equal to the head
 
+
 	if (curr != NULL) { // if list is not empty
-		printf("\n");
 		while (curr != NULL) { // while we are not at the ened of the list
+			printf("\n\t| #%d\n", count + 1);
 			displayPassenger(curr); // display the individual passenger
 			curr = curr->NEXT; // move along the list
+			count++;	// increment the counter
 		}
-		printf("\nAll database records displayed\n"); // finished displaying
+		printf("\nAll %d database records displayed\n", count); // finished displaying
+		printf("----------------------------------------------------------------------------------\n");
 	}
 	else {
 		printf("The database is empty\n"); // no records found

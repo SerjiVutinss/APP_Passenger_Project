@@ -31,28 +31,21 @@ static void showReport(
 	float percentLessThanSevenDays = 0;
 	float percentMoreThanSevenDays = 0;
 
-	printf("%.2f\n\n", (float)countUK / (float)totalCount * totalPercent);
-	printf("%.2f\n", (float)countEurope / (float)totalCount * totalPercent);
-	printf("%.2f\n", (float)countAsia / (float)totalCount * totalPercent);
-	printf("%.2f\n", (float)countAfrica / (float)totalCount * totalPercent);
-	printf("%.2f\n", (float)countAmericas / (float)totalCount * totalPercent);
-	printf("%.2f\n", (float)countAustralasia / (float)totalCount * totalPercent);
-	printf("%.2f\n", (float)countOneDay / (float)totalCount * totalPercent);
-	printf("%.2f\n", (float)countLessThanThreeDays / (float)totalCount * totalPercent);
-	printf("%.2f\n", (float)countLessThanSevenDays / (float)totalCount * totalPercent);
-	printf("%.2f\n", (float)countMoreThanSevenDays / (float)totalCount * totalPercent);
-
-	printf("%d %d %d %d %d %d %d %d %d %d", totalCount,
-		countUK,
-		countEurope,
-		countAsia,
-		countAfrica,
-		countAmericas,
-		countAustralasia,
-		countOneDay,
-		countLessThanThreeDays,
-		countLessThanSevenDays,
-		countMoreThanSevenDays);
+	printf("\t|-------------------------------------------------------------------------\n");
+	printf("\t|   All figures shown as percentages\n");
+	printf("\t|-------------------------------------------------------------------------\n");
+	printf("\t|            UK: %.2f\n", (float)countUK / (float)totalCount * totalPercent);
+	printf("\t|        Europe: %.2f\n", (float)countEurope / (float)totalCount * totalPercent);
+	printf("\t|          Asia: %.2f\n", (float)countAsia / (float)totalCount * totalPercent);
+	printf("\t|        Africa: %.2f\n", (float)countAfrica / (float)totalCount * totalPercent);
+	printf("\t|      Americas: %.2f\n", (float)countAmericas / (float)totalCount * totalPercent);
+	printf("\t|   Australasia: %.2f\n", (float)countAustralasia / (float)totalCount * totalPercent);
+	printf("\t|       One Day: %.2f\n", (float)countOneDay / (float)totalCount * totalPercent);
+	printf("\t|      < 3 Days: %.2f\n", (float)countLessThanThreeDays / (float)totalCount * totalPercent);
+	printf("\t|      < 7 Days: %.2f\n", (float)countLessThanSevenDays / (float)totalCount * totalPercent);
+	printf("\t|      > 7 Days: %.2f\n", (float)countMoreThanSevenDays / (float)totalCount * totalPercent);
+	printf("\t|-------------------------------------------------------------------------\n");
+	printf("\n");
 
 }
 

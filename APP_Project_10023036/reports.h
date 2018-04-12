@@ -1,5 +1,5 @@
-#ifndef REPORTS
-#define REPORTS
+#ifndef REPORTS_H
+#define REPORTS_H
 
 void runTravelClassReports(struct Passenger* head, int travelClassType);
 static void showReport(
@@ -15,4 +15,4 @@ static void showReport(
 	int countLessThanSevenDays,
 	int countMoreThanSevenDays
 );
-#endif
+#endif // REPORTS_H

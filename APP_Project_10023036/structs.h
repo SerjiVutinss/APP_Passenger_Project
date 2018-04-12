@@ -1,5 +1,5 @@
 #ifndef STRUCTS
-#define STRUCTS
+#define STRUCTS_H
 
 #define USERNAME_MAX_LEN 50
 #define PASSWORD_MAX_LEN 7 // includes room for termination character
@@ -8,6 +8,8 @@
 #define NUM_TRAVEL_CLASSES 4
 #define NUM_TRIPS_PER_YEAR 3
 #define NUM_TRIP_DURATION 4
+
+#define DEBUG_ON 0
 
 // initialise and populate the helper arrays with data
 void initialiseArrays();
@@ -62,4 +64,4 @@ struct TravelClass travelClasses[NUM_TRAVEL_CLASSES];
 struct TripsPerYear tripsPerYear[NUM_TRIPS_PER_YEAR];
 struct TripDuration tripDuration[NUM_TRIP_DURATION];
 
-#endif
+#endif // STRUCTS_H

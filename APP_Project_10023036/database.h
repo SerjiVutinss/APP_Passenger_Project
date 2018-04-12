@@ -1,5 +1,5 @@
-#ifndef DATABASE
-#define DATABASE
+#ifndef DATABASE_H
+#define DATABASE_H
 
 //void readFileLines();
 
@@ -36,4 +36,4 @@ void update(struct Passenger* passengerToUpdate);
 // get the inputs for a new passenger and return a pointer
 struct Passenger* inputPassenger(int passportNumber);
 
-#endif
+#endif // DATABASE_H
