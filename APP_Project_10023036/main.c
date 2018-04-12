@@ -41,9 +41,11 @@ int main() {
 
 	char email1[25] = "jservis";
 	char email2[25] = "a.com@gmail";
+	char email3[25] = "asdd@l.com";
 
-	printf("\n%s is %d", email1, isValidEmail(email1));
-	printf("\n%s is %d", email2, isValidEmail(email2));
+	printf("\n%s is %d\n\n", email1, isValidEmail(email1));
+	printf("\n%s is %d\n\n", email2, isValidEmail(email2));
+	printf("\n%s is %d\n\n", email3, isValidEmail(email3));
 
 	restore(&headPtr);
 

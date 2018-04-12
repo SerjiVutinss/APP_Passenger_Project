@@ -3,6 +3,7 @@
 #include<stdlib.h>
 #include "structs.h"
 
+
 // get all the passenger related data from the user and return a passenger pointer
 struct Passenger* inputPassenger(int passportNumber) {
 	int i;
@@ -22,12 +23,26 @@ struct Passenger* inputPassenger(int passportNumber) {
 	// year born
 	printf("Year Born: ");
 	scanf("%d", &passenger->yearBorn);
-	
+
+	// call the static method in this file
 	getPassengerEditableInfo(passenger);
 
+	// return the new passenger
 	return passenger;
 }
 
+// update the supplied passenger's details
+void updatePassenger(struct Passenger* passenger) {
+	int i; // for loop variable
+	int userChoice = -1; // do while loop variable
+	printf("Please enter the updated Passenger details:");
+
+	// call the static method in this file
+	getPassengerEditableInfo(passenger);
+}
+
+// function to set the user's editable details
+// only called from this file so static - no return type since struct is updated
 static void getPassengerEditableInfo(struct Passenger* passenger) {
 
 	int userChoice = -1;
@@ -37,7 +52,7 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 	printf("Email address: ");
 	scanf("%s", passenger->email);
 
-	// select travel area
+	// select travel area - loop until valid choice entered
 	do {
 		printf("Which of the following areas did you travel from?");
 		for (i = 0; i < NUM_TRAVEL_AREAS; i++) {
@@ -55,7 +70,7 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 	passenger->travelledFrom = userChoice - 1; // offset since we need the array index
 	userChoice = -1; // reset this variable for reuse
 
-					 // select travel class
+	// select travel class- loop until valid choice entered
 	do {
 		printf("\nWhich travel class did you use to travel to Ireland?");
 		for (i = 0; i < NUM_TRAVEL_CLASSES; i++) {
@@ -73,7 +88,7 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 	passenger->travelClass = userChoice - 1;
 	userChoice = -1; // reset this variable for reuse
 
-					 // select number of trips
+	// select number of trips - loop until valid choice entered
 	do {
 		printf("\nHow many trips to Ireland do you make per year?");
 		for (i = 0; i < NUM_TRIPS_PER_YEAR; i++) {
@@ -91,7 +106,7 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 	passenger->tripsPerYear = userChoice - 1;
 	userChoice = -1; // reset this variable for reuse
 
-					 // select trip duration
+	// select trip duration - loop until valid choice entered
 	do {
 		printf("\nOn average, how long is the duration of your trip?");
 		for (i = 0; i < NUM_TRIP_DURATION; i++) {
@@ -108,16 +123,6 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 	} while (userChoice == -1);
 	passenger->tripAvgDuration = userChoice - 1;
 	userChoice = -1; // reset this variable for reuse
-
-}
-
-// update the supplied passenger's details
-void updatePassenger(struct Passenger* passenger) {
-	int i; // for loop variable
-	int userChoice = -1; // do while loop variable
-	printf("Please enter the updated Passenger details:");
-
-	getPassengerEditableInfo(passenger);
 }
 
 // display the supplied passenger's details
@@ -144,25 +149,111 @@ void displayPassenger(struct Passenger* passenger) {
 // return 1 if supplied string is a valid email format, else return 0
 int isValidEmail(char emailAddress[]) {
 
+	int retVal = 0;
+
+	int hasSpace = 0;
+	int atPos = -1;
+	int dotPos = -1;
 	int l = strlen(emailAddress); // get length of supplied string
+
 	if (emailAddress[l - 1] == ' ')
 	{
 		emailAddress[l - 1] = 0;
 		--l;
 	}
-	int flag1 = 0, flag2 = 0;
 	for (int i = 1; i < l; i++)
 	{
-		if (emailAddress[i] == '@')
-			flag1 = 1;
+		if (emailAddress[i] == ' ') {
+			hasSpace = 1;
+		}
+
+		if (emailAddress[i] == '@') {
+			atPos = i;
+		}
 		if (emailAddress[i] == '.') {
-			flag2 = 1;
+			dotPos = i;
 		}
 	}
-	if (flag1&&flag2) {
-		return 1;
+
+	if ((hasSpace != 1) && (dotPos > (atPos + 1))) {
+			return 1;
 	}
-	else {
+	return 0;
+}
+
+int Check_Email_Addr(char *EM_Addr) {
+	int count = 0;
+	int i = 0;
+	char conv_buf[50];
+	char *c, *domain;
+	char *special_chars = "()<>@,;:\"[]";
+
+	/* The input is in EBCDIC so convert to ASCII first */
+	//strcpy(conv_buf, EM_Addr);
+	//EtoA(conv_buf);
+	///* convert the special chars to ASCII */
+	//EtoA(special_chars);
+
+	for (c = conv_buf; *c; c++) {
+		/* if '"' and beginning or previous is a '.' or '"' */
+		if (*c == 34 && (c == conv_buf || *(c - 1) == 46 || *(c - 1) == 34)) {
+			while (*++c) {
+				/* if '"' break, End of name */
+				if (*c == 34)
+					break;
+				/* if '' and ' ' */
+				if (*c == 92 && (*++c == 32))
+					continue;
+				/* if not between ' ' & '~' */
+				if (*c <= 32 || *c > 127)
+					return 0;
+			}
+			/* if no more characters error */
+			if (!*c++)
+				return 0;
+			/* found '@' */
+			if (*c == 64)
+				break;
+			/* '.' required */
+			if (*c != 46)
+				return 0;
+			continue;
+		}
+		if (*c == 64) {
+			break;
+		}
+		/* make sure between ' ' && '~' */
+		if (*c <= 32 || *c > 127) {
+			return 0;
+		}
+		/* check special chars */
+		if (strchr(special_chars, *c)) {
+			return 0;
+		}
+	} /* end of for loop */
+	  /* found '@' */
+	  /* if at beginning or previous = '.' */
+	if (c == conv_buf || *(c - 1) == 46)
 		return 0;
-	}
+	/* next we validate the domain portion */
+	/* if the next character is NULL */
+	/* need domain ! */
+	if (!*(domain = ++c))
+		return 0;
+	do {
+		/* if '.' */
+		if (*c == 46) {
+			/* if beginning or previous = '.' */
+			if (c == domain || *(c - 1) == 46)
+				return 0;
+			/* count '.' need at least 1 */
+			count++;
+		}
+		/* make sure between ' ' and '~' */
+		if (*c <= 32 || *c >= 127)
+			return 0;
+		if (strchr(special_chars, *c))
+			return 0;
+	} while (*++c); /* while valid char */
+	return (count >= 1); /* return true if more than 1 '.' */
 }

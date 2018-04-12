@@ -16,7 +16,7 @@ struct Passenger* inputPassenger(int passportNumber);
 // update the supplied passenger's details - calls getPassengerEditableInfo()
 void updatePassenger(struct Passenger* passengerToUpdate);
 
-// called by inputPassenger() and updatePassenger()
+// called by inputPassenger() and updatePassenger() - only used in these files
 static void getPassengerEditableInfo(struct Passenger* passenger);
 
 // display the supplied passenger's details
@@ -25,6 +25,7 @@ void displayPassenger(struct Passenger* passenger);
 // return 1 if supplied string is a valid email format, else return 0
 int isValidEmail(char emailAddress[]);
 
+int Check_Email_Addr(char *EM_Addr);
 
 #endif // PASSENGER_H
 
