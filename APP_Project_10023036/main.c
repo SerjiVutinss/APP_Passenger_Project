@@ -16,6 +16,7 @@
 #include "login.h" // the login module handles all login related tasks
 #include "database.h" // linked list (database) operations
 #include "reports.h" // reporting related functions
+#include "passenger.h"
 
   // will be used to read the login_details.txt file
 User* users; // will be used to contain all users read in from the file
@@ -198,7 +199,7 @@ int menuDisplayUpdate(struct Passenger* headPtr, int type) {
 			if (qryResult != -1) {
 				// passenger found, proceed with update or display, passing in the passport number
 				if (type == 1) {
-					update(getPassengerByIndex(headPtr, qryResult));
+					updatePassenger(getPassengerByIndex(headPtr, qryResult));
 				}
 				else {
 					displayPassenger(getPassengerByIndex(headPtr, qryResult));
@@ -218,7 +219,7 @@ int menuDisplayUpdate(struct Passenger* headPtr, int type) {
 			if (qryResult != -1) {
 				// passenger found, proceed with update, passing in the passport number
 				if (type == 1) {
-					update(getPassengerByIndex(headPtr, qryResult));
+					updatePassenger(getPassengerByIndex(headPtr, qryResult));
 				}
 				else {
 					displayPassenger(getPassengerByIndex(headPtr, qryResult));

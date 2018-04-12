@@ -1,9 +1,10 @@
+#include "database.h" // this file's header
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 
-#include "database.h"
-#include "structs.h"
+#include "structs.h" // structs and constants
 
 FILE* dbFilePtr = NULL;
 
@@ -95,19 +96,6 @@ void restore(struct Passenger** head) {
 	dbFilePtr = NULL;
 }
 
-//void readFileLines() {
-//	char * line = NULL;
-//
-//	dbFilePtr = fopen("database.txt", "r");
-//	int count = 0;
-//
-//	while (!feof(dbFilePtr)) {
-//		fgets(line, 120, dbFilePtr);
-//		count++;
-//	}
-//	printf("Count: %d", count);
-//}
-
 void insert(struct Passenger** head, struct Passenger* newPassenger) {
 
 	struct Passenger* curr;
@@ -164,194 +152,6 @@ void delete(struct Passenger** head, int index) {
 	}
 }
 
-struct Passenger* inputPassenger(int passportNumber) {
-	int i;
-	int userChoice = -1;
-	struct Passenger* newPassenger;
-	newPassenger = (struct Passenger*)malloc(sizeof(struct Passenger));
-	newPassenger->passportNumber = passportNumber;
-
-	printf("Please enter the new Passenger's details:");
-
-	// first name
-	printf("\nFirst Name: ");
-	scanf("%s", newPassenger->firstName);
-	// last name
-	printf("Last Name: ");
-	scanf("%s", newPassenger->lastName);
-	// year born
-	printf("Year Born: ");
-	scanf("%d", &newPassenger->yearBorn);
-	// email
-	printf("Email address: ");
-	scanf("%s", newPassenger->email);
-
-	// select travel area
-	do {
-		printf("Which of the following areas did you travel from?");
-		for (i = 0; i < NUM_TRAVEL_AREAS; i++) {
-			printf("\n\t%d. %s", i + 1, travelAreas[i].value);
-		}
-		printf("\nPlease select: ");
-		scanf("%d", &userChoice);
-
-		if (userChoice <= 0 || userChoice > NUM_TRAVEL_AREAS) {
-			printf("\nThat was not a valid selection, please try again");
-			userChoice = -1;
-		}
-
-	} while (userChoice == -1);
-	newPassenger->travelledFrom = userChoice - 1; // offset since we need the array index
-	userChoice = -1; // reset this variable for reuse
-
-	// select travel class
-	do {
-		printf("\nWhich travel class did you use to travel to Ireland?");
-		for (i = 0; i < NUM_TRAVEL_CLASSES; i++) {
-			printf("\n\t%d. %s", i + 1, travelClasses[i].value);
-		}
-		printf("\nPlease select: ");
-		scanf("%d", &userChoice);
-
-		if (userChoice <= 0 || userChoice > NUM_TRAVEL_CLASSES) {
-			printf("\nThat was not a valid selection, please try again");
-			userChoice = -1;
-		}
-
-	} while (userChoice == -1);
-	newPassenger->travelClass = userChoice - 1;
-	userChoice = -1; // reset this variable for reuse
-
-	// select number of trips
-	do {
-		printf("\nHow many trips to Ireland do you make per year?");
-		for (i = 0; i < NUM_TRIPS_PER_YEAR; i++) {
-			printf("\n\t%d. %s", i + 1, tripsPerYear[i].message);
-		}
-		printf("\nPlease select: ");
-		scanf("%d", &userChoice);
-
-		if (userChoice <= 0 || userChoice > NUM_TRIPS_PER_YEAR) {
-			printf("\nThat was not a valid selection, please try again");
-			userChoice = -1;
-		}
-
-	} while (userChoice == -1);
-	newPassenger->tripsPerYear = userChoice - 1;
-	userChoice = -1; // reset this variable for reuse
-
-	// select trip duration
-	do {
-		printf("\nOn average, how long is the duration of your trip?");
-		for (i = 0; i < NUM_TRIP_DURATION; i++) {
-			printf("\n\t%d. %s", i + 1, tripDuration[i].message);
-		}
-		printf("\nPlease select: ");
-		scanf("%d", &userChoice);
-
-		if (userChoice <= 0 || userChoice > NUM_TRIP_DURATION) {
-			printf("\nThat was not a valid selection, please try again");
-			userChoice = -1;
-		}
-
-	} while (userChoice == -1);
-	newPassenger->tripAvgDuration = userChoice - 1;
-	userChoice = -1; // reset this variable for reuse
-
-	return newPassenger;
-}
-
-void update(struct Passenger* passengerToUpdate) {
-	int i; // for loop variable
-	int userChoice = -1; // do while loop variable
-	printf("Please enter the updated Passenger details:");
-
-	// email
-	printf("Email address: ");
-	scanf("%s", passengerToUpdate->email);
-
-	// select travel area
-	do {
-		printf("Which of the following areas did you travel from?");
-		for (i = 0; i < NUM_TRAVEL_AREAS; i++) {
-			printf("\n\t%d. %s", i + 1, travelAreas[i].value);
-		}
-		printf("\nPlease select: ");
-		scanf("%d", &userChoice);
-
-		if (!(userChoice > 0 && userChoice <= NUM_TRAVEL_AREAS)) {
-			printf("\nThat was not a valid selection, please try again");
-		}
-		else {
-			userChoice == -1;
-		}
-
-	} while (userChoice == -1);
-	passengerToUpdate->travelledFrom = userChoice - 1;
-	userChoice = -1; // reset this variable for reuse
-
-					 // select travel class
-	do {
-		printf("\nWhich travel class did you use to travel to Ireland?");
-		for (i = 0; i < NUM_TRAVEL_CLASSES; i++) {
-			printf("\n\t%d. %s", i + 1, travelClasses[i].value);
-		}
-		printf("\nPlease select: ");
-		scanf("%d", &userChoice);
-
-		if (!(userChoice > 0 && userChoice <= NUM_TRAVEL_CLASSES)) {
-			printf("\nThat was not a valid selection, please try again");
-		}
-		else {
-			userChoice == -1;
-		}
-
-	} while (userChoice == -1);
-	passengerToUpdate->travelClass = userChoice - 1;
-	userChoice = -1; // reset this variable for reuse
-
-					 // select number of trips
-	do {
-		printf("\nHow many trips to Ireland do you make per year?");
-		for (i = 0; i < NUM_TRIPS_PER_YEAR; i++) {
-			printf("\n\t%d. %s", i + 1, tripsPerYear[i].message);
-		}
-		printf("\nPlease select: ");
-		scanf("%d", &userChoice);
-
-		if (!(userChoice > 0 && userChoice <= NUM_TRIPS_PER_YEAR)) {
-			printf("\nThat was not a valid selection, please try again");
-		}
-		else {
-			userChoice == -1;
-		}
-
-	} while (userChoice == -1);
-	passengerToUpdate->tripsPerYear = userChoice - 1;
-	userChoice = -1; // reset this variable for reuse
-
-					 // select trip duration
-	do {
-		printf("\nOn average, how long is the duration of your trip?");
-		for (i = 0; i < NUM_TRIP_DURATION; i++) {
-			printf("\n\t%d. %s", i + 1, tripDuration[i].message);
-		}
-		printf("\nPlease select: ");
-		scanf("%d", &userChoice);
-
-		if (!(userChoice > 0 && userChoice <= NUM_TRIP_DURATION)) {
-			printf("\nThat was not a valid selection, please try again");
-		}
-		else {
-			userChoice == -1;
-		}
-
-	} while (userChoice == -1);
-	passengerToUpdate->tripAvgDuration = userChoice - 1;
-	userChoice = -1; // reset this variable for reuse
-
-}
-
 struct Passenger* getPassengerByIndex(struct Passenger* head, int index) {
 
 	int i;
@@ -387,28 +187,6 @@ void displayList(struct Passenger* head) {
 		printf("The database is empty\n"); // no records found
 	}
 }
-
-// display the supplied passenger's details
-void displayPassenger(struct Passenger* passenger) {
-
-	int padLen = 35;
-	const char *padding = "                                                                     ";
-
-	printf("\t|-------------------------------------------------------------------------\n");
-	printf("\t|    Passport Number: %d\n", passenger->passportNumber, padLen);
-	printf("\t|         First Name: %s\n", passenger->firstName, padLen);
-	printf("\t|          Last Name: %s\n", passenger->lastName, padLen);
-	printf("\t|          Year Born: %d\n", passenger->yearBorn, padLen);
-	printf("\t|              Email: %s\n", passenger->email, padLen);
-
-	// get item and print string from each array using the stored indices
-	printf("\t|     Travelled From: %s\n", travelAreas[passenger->travelledFrom].value, padLen);
-	printf("\t|       Travel Class: %s\n", travelClasses[passenger->travelClass].value, padLen);
-	printf("\t|     Trips Per Year: %s\n", tripsPerYear[passenger->tripsPerYear].message, padLen);
-	printf("\t| Avg. Trip Duration: %s\n", tripDuration[passenger->tripAvgDuration].message, padLen);
-	printf("\t|-------------------------------------------------------------------------\n");
-}
-
 
 // search the list for a passport number and return the position if found, else return -1
 int passengerPassportExists(struct Passenger* head, int passportNumber) {

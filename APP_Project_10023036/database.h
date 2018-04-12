@@ -6,10 +6,11 @@
 void backup(struct Passenger* head);
 void restore(struct Passenger** head);
 
-// inserts a passenger at the correct position in the sorted list
-void insert(struct Passenger** head, struct Passenger* passenger);
 
-// deletes a passenger from the sorted list
+// inserts a passenger into the sorted linked list
+void insert(struct Passenger** head, struct Passenger* newPassenger);
+
+// deletes a passenger from the sorted linked list
 void delete(struct Passenger** head, int passportNumber);
 
 // print all elements in the list to the screen
@@ -29,9 +30,6 @@ void displayPassenger(struct Passenger* passenger);
 
 // return a passenger by their index in the list
 struct Passenger* getPassengerByIndex(struct Passenger* head, int index);
-
-// update a passenger's details
-void update(struct Passenger* passengerToUpdate);
 
 // get the inputs for a new passenger and return a pointer
 struct Passenger* inputPassenger(int passportNumber);

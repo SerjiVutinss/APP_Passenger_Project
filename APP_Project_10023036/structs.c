@@ -74,29 +74,3 @@ void initialiseArrays() {
 	tripDuration[3].maxVal = INT_MAX;
 	strcpy(tripDuration[3].message, "More than 7 days");
 }
-
-// return 1 if CONTAINS '@' and '.', else return 0
-int isValidEmail(char emailAddress[]) {
-
-	int l = strlen(emailAddress); // get length of supplied string
-	if (emailAddress[l - 1] == ' ')
-	{
-		emailAddress[l - 1] = 0;
-		--l;
-	}
-	int flag1 = 0, flag2 = 0;
-	for (int i = 1; i < l; i++)
-	{
-		if (emailAddress[i] == '@')
-			flag1 = 1;
-		if (emailAddress[i] == '.') {
-			flag2 = 1;
-		}
-	}
-	if (flag1&&flag2) {
-		return 1;
-	}
-	else {
-		return 0;
-	}
-}

@@ -30,6 +30,9 @@
     <ClCompile Include="structs.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="passenger.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="database.h">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="structs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="passenger.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

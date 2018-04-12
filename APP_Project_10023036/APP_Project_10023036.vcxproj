@@ -145,12 +145,14 @@
     <ClCompile Include="database.c" />
     <ClCompile Include="login.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="passenger.c" />
     <ClCompile Include="reports.c" />
     <ClCompile Include="structs.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="database.h" />
     <ClInclude Include="login.h" />
+    <ClInclude Include="passenger.h" />
     <ClInclude Include="reports.h" />
     <ClInclude Include="structs.h" />
   </ItemGroup>
