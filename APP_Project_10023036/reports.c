@@ -32,14 +32,17 @@ static void showReport(
 	float percentMoreThanSevenDays = 0;
 
 	printf("\t|-------------------------------------------------------------------------\n");
-	printf("\t|   All figures shown as percentages\n");
+	printf("\t|   All figures shown as percentages (two decimal places)\n");
 	printf("\t|-------------------------------------------------------------------------\n");
+	printf("\t|   Area travelled from:\n");
 	printf("\t|            UK: %.2f\n", (float)countUK / (float)totalCount * totalPercent);
 	printf("\t|        Europe: %.2f\n", (float)countEurope / (float)totalCount * totalPercent);
 	printf("\t|          Asia: %.2f\n", (float)countAsia / (float)totalCount * totalPercent);
 	printf("\t|        Africa: %.2f\n", (float)countAfrica / (float)totalCount * totalPercent);
 	printf("\t|      Americas: %.2f\n", (float)countAmericas / (float)totalCount * totalPercent);
 	printf("\t|   Australasia: %.2f\n", (float)countAustralasia / (float)totalCount * totalPercent);
+	printf("\t|-------------------------------------------------------------------------\n");
+	printf("\t|   Average Trip duration:\n");
 	printf("\t|       One Day: %.2f\n", (float)countOneDay / (float)totalCount * totalPercent);
 	printf("\t|      < 3 Days: %.2f\n", (float)countLessThanThreeDays / (float)totalCount * totalPercent);
 	printf("\t|      < 7 Days: %.2f\n", (float)countLessThanSevenDays / (float)totalCount * totalPercent);
@@ -63,7 +66,7 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 	int countLessThanSevenDays = 0;
 	int countMoreThanSevenDays = 0;
 
-	travelClassType--;
+	travelClassType -= 1;
 	struct Passenger* curr; // pointer to current passenger
 	curr = head; // set the current equal to the head
 
@@ -73,7 +76,7 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 		while (curr != NULL) { // while we are not at the ened of the list
 			// check for supplied travel class type
 			if (curr->travelClass == travelClassType) {
-				totalCount++; // increment the total number of passengers with this travel class
+				totalCount += 1; // increment the total number of passengers with this travel class
 				switch (curr->travelledFrom) { // build counts for each area travelled from
 				case 0:
 					countUK++;
@@ -123,7 +126,7 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 			curr = curr->NEXT; // move along the list
 		} // end while
 
-		printf("%d %d %d %d %d %d %d %d %d %d", totalCount,
+		/*printf("%d %d %d %d %d %d %d %d %d %d", totalCount,
 			countUK,
 			countEurope,
 			countAsia,
@@ -133,7 +136,7 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 			countOneDay,
 			countLessThanThreeDays,
 			countLessThanSevenDays,
-			countMoreThanSevenDays);
+			countMoreThanSevenDays);*/
 
 		printf("\nShowing Travel Class Report:\n"); // finished displaying
 		showReport(

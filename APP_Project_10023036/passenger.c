@@ -46,11 +46,24 @@ void updatePassenger(struct Passenger* passenger) {
 static void getPassengerEditableInfo(struct Passenger* passenger) {
 
 	int userChoice = -1;
+	int emailIsValid = -1;
 	int i = 0;
 
-	// email
-	printf("Email address: ");
-	scanf("%s", passenger->email);
+	// validate email address
+	do {
+		// email
+		printf("Email address: ");
+		scanf("%s", passenger->email);
+
+		emailIsValid = isValidEmail(passenger->email);
+		if (!emailIsValid) {
+			printf("That is not a valid email address, please try again\n");
+		}
+		else {
+			printf("Email address accepted\n");
+		}
+	}
+	while (emailIsValid != 1);
 
 	// select travel area - loop until valid choice entered
 	do {
@@ -176,7 +189,7 @@ int isValidEmail(char emailAddress[]) {
 	}
 
 	if ((hasSpace != 1) && (dotPos > (atPos + 1))) {
-			return 1;
+		return 1;
 	}
 	return 0;
 }

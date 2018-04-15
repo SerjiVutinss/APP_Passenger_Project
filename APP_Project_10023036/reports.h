@@ -1,6 +1,7 @@
 #ifndef REPORTS_H
 #define REPORTS_H
 
+
 void runTravelClassReports(struct Passenger* head, int travelClassType);
 static void showReport(
 	int totalCount,
