@@ -234,6 +234,7 @@ void runBornBeforeReport(struct Passenger* head, int bornBefore) {
 	}
 }
 
+
 void runOrderedUKYearOfBirthReport(struct Passenger* head) {
 
 	int i = 0; // loop counter
@@ -250,7 +251,8 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head) {
 	if (curr != NULL) { // if list is not empty
 
 		// for each year, loop through the linked list
-		for (year = 1900; year <= 2020; year++) {
+		// assuming valid years of birth are 1900-2050 to limit number of loops
+		for (year = 1900; year <= 2050; year++) {
 			curr = head;
 			while (curr != NULL) { // while we are not at the end of the list
 
@@ -263,12 +265,13 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head) {
 							// passenger not already added
 							*(alreadyAdded + numAdded) = curr->passportNumber; // add to array
 
-							displayPassenger(curr); // and display the passenger's details
+							// and display the passenger's details (passenger.c)
+							displayPassenger(curr);
 							numAdded++; // increment so another passenger can be added
 						}
 					}
 				}
-				curr = curr->NEXT;
+				curr = curr->NEXT; // move the pointer along the list
 			}
 		}
 	}
