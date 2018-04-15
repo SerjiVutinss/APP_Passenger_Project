@@ -1,7 +1,9 @@
 #include"reports.h"
 #include"structs.h"
+#include "database.h"
 
 #include<stdio.h>
+#include<stdlib.h>
 #include<string.h>
 
 // method only run from this file
@@ -66,7 +68,7 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 	int countLessThanSevenDays = 0;
 	int countMoreThanSevenDays = 0;
 
-	travelClassType -= 1;
+	travelClassType--;
 	struct Passenger* curr; // pointer to current passenger
 	curr = head; // set the current equal to the head
 
@@ -76,7 +78,7 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 		while (curr != NULL) { // while we are not at the ened of the list
 			// check for supplied travel class type
 			if (curr->travelClass == travelClassType) {
-				totalCount += 1; // increment the total number of passengers with this travel class
+				totalCount++; // increment the total number of passengers with this travel class
 				switch (curr->travelledFrom) { // build counts for each area travelled from
 				case 0:
 					countUK++;
@@ -118,27 +120,11 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 					// should not happen
 					break;
 				}
-
-				// perform the calculations
 			}
-
-
 			curr = curr->NEXT; // move along the list
 		} // end while
 
-		/*printf("%d %d %d %d %d %d %d %d %d %d", totalCount,
-			countUK,
-			countEurope,
-			countAsia,
-			countAfrica,
-			countAmericas,
-			countAustralasia,
-			countOneDay,
-			countLessThanThreeDays,
-			countLessThanSevenDays,
-			countMoreThanSevenDays);*/
-
-		printf("\nShowing Travel Class Report:\n"); // finished displaying
+		printf("\nShowing Travel Class Report:\n"); // show this report
 		showReport(
 			totalCount,
 			countUK,
@@ -158,3 +144,144 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 	}
 }
 
+void runBornBeforeReport(struct Passenger* head, int bornBefore) {
+
+	int totalCount = 0;
+	int countUK = 0;
+	int countEurope = 0;
+	int countAsia = 0;
+	int countAfrica = 0;
+	int countAmericas = 0;
+	int countAustralasia = 0;
+	int countOneDay = 0;
+	int countLessThanThreeDays = 0;
+	int countLessThanSevenDays = 0;
+	int countMoreThanSevenDays = 0;
+
+	//travelClassType--;
+	struct Passenger* curr; // pointer to current passenger
+	curr = head; // set the current equal to the head
+
+	if (curr != NULL) { // if list is not empty
+		printf("\n");
+
+		while (curr != NULL) { // while we are not at the ened of the list
+							   // check for supplied travel class type
+			if (curr->yearBorn < bornBefore) {
+				totalCount++; // increment the total number of passengers with this travel class
+				switch (curr->travelledFrom) { // build counts for each area travelled from
+				case 0:
+					countUK++;
+					break;
+				case 1:
+					countEurope++;
+					break;
+				case 2:
+					countAsia++;
+					break;
+				case 3:
+					countAfrica++;
+					break;
+				case 4:
+					countAmericas++;
+					break;
+				case 5:
+					countAustralasia++;
+					break;
+				default:
+					// should not happen!
+					break;
+				}
+
+				switch (curr->tripAvgDuration) {
+				case 0:
+					countOneDay++;
+					break;
+				case 1:
+					countLessThanThreeDays++;
+					break;
+				case 2:
+					countLessThanSevenDays++;
+					break;
+				case 3:
+					countMoreThanSevenDays++;
+					break;
+				default:
+					// should not happen
+					break;
+				}
+			}
+			curr = curr->NEXT; // move along the list
+		} // end while
+
+		printf("\nShowing Travel Class Report:\n"); // show this report
+		showReport(
+			totalCount,
+			countUK,
+			countEurope,
+			countAsia,
+			countAfrica,
+			countAmericas,
+			countAustralasia,
+			countOneDay,
+			countLessThanThreeDays,
+			countLessThanSevenDays,
+			countMoreThanSevenDays
+		);
+	}
+	else {
+		printf("The database is empty\n"); // no records found
+	}
+}
+
+void runOrderedUKYearOfBirthReport(struct Passenger* head) {
+
+	int i = 0; // loop counter
+	int year; // used to loop through the years
+	int numPassengers = getLength(head); // total length of linked list
+
+	// this will be used to keep track of which passengers have already been caught
+	int* alreadyAdded = (int*)malloc(sizeof(int) * numPassengers);
+	int numAdded = 0; // number of passport numbers already added to above array
+
+	struct Passenger* curr; // pointer to current passenger
+	curr = head; // set the current equal to the head
+
+	if (curr != NULL) { // if list is not empty
+
+		// for each year, loop through the linked list
+		for (year = 1900; year <= 2020; year++) {
+			curr = head;
+			while (curr != NULL) { // while we are not at the end of the list
+
+				// if the year of birth is less than the current year and has travelled from UK
+				if (curr->yearBorn < year && curr->travelledFrom == 0) {
+
+					// check the already added array to see if this passportNumber has been added already
+					for (i = 0; i < numPassengers; i++) {
+						if (!isAlreadyAdded(alreadyAdded, numPassengers, curr->passportNumber)) {
+							// passenger not already added
+							*(alreadyAdded + numAdded) = curr->passportNumber; // add to array
+
+							displayPassenger(curr); // and display the passenger's details
+							numAdded++; // increment so another passenger can be added
+						}
+					}
+				}
+				curr = curr->NEXT;
+			}
+		}
+	}
+}
+
+// returns 1 if the supplied passportnumber is found in the array
+static int isAlreadyAdded(int *alreadyAdded, int numPassengers, int passportNumber) {
+
+	int i = 0; // loop counter
+	for (i = 0; i < numPassengers; i++) {
+		if (passportNumber == alreadyAdded[i]) {
+			return 1; // passport number found
+		}
+	}
+	return 0; // no match found
+}

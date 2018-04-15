@@ -39,13 +39,13 @@ int main() {
 
 	initialiseArrays();
 
-	char email1[25] = "jservis";
+	/*char email1[25] = "jservis";
 	char email2[25] = "a.com@gmail";
 	char email3[25] = "asdd@l.com";
 
 	printf("\n%s is %d\n\n", email1, isValidEmail(email1));
 	printf("\n%s is %d\n\n", email2, isValidEmail(email2));
-	printf("\n%s is %d\n\n", email3, isValidEmail(email3));
+	printf("\n%s is %d\n\n", email3, isValidEmail(email3));*/
 
 	restore(&headPtr);
 
@@ -147,6 +147,7 @@ int main() {
 				}
 				else if (reportType == 2) {
 					// born before 1980
+					runBornBeforeReport(headPtr, 1980);
 				}
 
 			} while (reportType < 1 && reportType>2);
@@ -156,6 +157,7 @@ int main() {
 			break;
 		case 8:
 			printf("List all passengers travelling from the U.K. in order of their birth year\n");
+			runOrderedUKYearOfBirthReport(headPtr);
 			break;
 		case -1:
 			printf("Exiting\n");

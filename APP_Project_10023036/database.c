@@ -195,7 +195,6 @@ int passengerPassportExists(struct Passenger* head, int passportNumber) {
 	curr = head;
 
 	if (curr != NULL) {
-		printf("\n");
 		while (curr != NULL) {
 			if (curr->passportNumber == passportNumber) {
 				// FOUND
