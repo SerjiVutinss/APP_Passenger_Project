@@ -5,7 +5,7 @@
 
 // return 0 if string cannot be converted to int, else return converted value:
 // the function can accept strings with a minus sign as first character, needed for
-// the main menu exit option.
+// the main menu exit option.  I have used a pointer as a parameter here
 int stringToInt(char *s) {
 	int i = 0, isNumeric = -1;
 	// check if first character is a minus sign
@@ -27,8 +27,9 @@ int stringToInt(char *s) {
 	return atoi(s); // return the converted string to int
 }
 
-//must be greater than 2 chars and NOT contain any numbers
-int isValidName(char name[50]) {
+// must be greater than 2 chars and NOT contain any numbers, I have used a char array as a parameter here
+// +1 for terminator - hardcoding this rather than using CONSTANT because had trouble importing
+int isValidName(char name[51]) {
 
 	int i, j; // loop counters
 	int nameLength = strlen(name);

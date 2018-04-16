@@ -41,17 +41,7 @@ int menuDisplayUpdate(struct Passenger* headPtr, int type);
 
 // main function
 int main() {
-
-	/*printf("\n%d", nameIsValid("he3433lo"));
-	printf("\n%d", nameIsValid("we"));
-	printf("\n%d", nameIsValid("0"));
-	printf("\n%d", nameIsValid("jimbo6"));
-	printf("\n%d\n", nameIsValid("jimbo"));*/
-
-	//printTimeAndDate();
-	int year = 1899;
-	printf("Year is valid %d - %d", year, isValidYear(year));
-	printf("\nCurrent year=%d", getCurrentYear());
+	
 	//// BEGIN Variable Declarations
 	// head of the linked list
 	struct Passenger* headPtr = NULL;

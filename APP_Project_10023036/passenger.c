@@ -87,7 +87,7 @@ void updatePassenger(struct Passenger* passenger) {
 // only called from this file so static - no return type since struct is updated
 static void getPassengerEditableInfo(struct Passenger* passenger) {
 
-	char userInput[USERNAME_MAX_LEN];
+	char userInput[USERNAME_MAX_LEN + 1];
 	int userChoice = -1;
 	int emailIsValid = -1;
 	int i = 0;

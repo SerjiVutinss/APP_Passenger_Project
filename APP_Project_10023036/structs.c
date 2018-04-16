@@ -3,6 +3,7 @@
 #include<time.h>
 
 #include "structs.h"
+#include "validation.h"
 
 void initialiseArrays() {
 

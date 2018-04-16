@@ -1,14 +1,12 @@
 #ifndef STRUCTS
 #define STRUCTS_H
 
+//#include "validation.h"
+
 /* This file and its associated program file contain program constants, definitions of 
  * all structs used in the program and the initialisation of the struct arrays which 
  * are hold the data used in the passenger detail questions e.g. Travel Class, Travel Area, etc
  */
-
-
-#define USERNAME_MAX_LEN 50
-#define PASSWORD_MAX_LEN 7 // includes room for termination character
 
 /* these constants are used to define the struct array sizes, easily loop through these arrays,
  * and also to validate that user input is within bounds of the array, e.g. the inputPassenger()
@@ -18,6 +16,9 @@
 #define NUM_TRAVEL_CLASSES 4
 #define NUM_TRIPS_PER_YEAR 3
 #define NUM_TRIP_DURATION 4
+
+#define USERNAME_MAX_LEN 51 // max length of username, first name and last name
+#define PASSWORD_MAX_LEN 7 // includes room for termination character
 
 // this can be changed to 1 to display more verbose messages, e.g. when data is being
 // backed up or restored to/from the database.txt file
@@ -35,8 +36,8 @@ typedef struct User {
 // passenger struct which populate the sorted linked list
 struct Passenger {
 	int passportNumber; // this will be unique within the linked list
-	char firstName[50];
-	char lastName[50];
+	char firstName[USERNAME_MAX_LEN];
+	char lastName[USERNAME_MAX_LEN];
 	int yearBorn;
 	char email[50]; // this needs to be validated as email address format
 	// additional info, saved as indexed values
