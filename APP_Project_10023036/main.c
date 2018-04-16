@@ -115,8 +115,34 @@ int main() {
 					insert(&headPtr, inputPassenger(qryPassportNumber));
 				}
 				else {
-					// passport number was found, cannot insert
-					printf("\nA passenger with passport number %d already exists, aborting\n", qryPassportNumber);
+					// passport number was found, ask user if they would like to update the existing details
+					printf("\nA passenger with passport number %d already exists, would you like to update this user's details?\n", qryPassportNumber);
+
+					do {
+						// print options
+						printf("1. Yes\n");
+						printf("2. No\n");
+
+						printf("Please select: ");
+						scanf(" %s", userInput); // get user input
+						menuSelection = stringToInt(userInput); // check to see if a number was entered
+
+						switch (menuSelection) // decide what to do
+						{
+						case 1:
+							// get a pointer to the passenger to be updated and update details
+							updatePassenger(getPassengerByIndex(headPtr, queryResult));
+						default:
+							break;
+						}
+
+						if (menuSelection < 1 || menuSelection > 2) { // invalid option
+							printf("\nThat was not a valid option, please try again\n");
+						}
+
+					} while (menuSelection < 1 || menuSelection > 2); // valid option not selected
+					menuSelection = 0; // reset this variable to 0
+
 				}
 			}
 			else { // passport number was not a valid number
