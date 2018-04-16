@@ -7,6 +7,7 @@
 *  Functions in these files interact with the sorted linked - insertions, deletions, length,
 *  getting elements by index, passport number or name
 *
+*  User input for passenger details is handled in passenger.c/h
 */
 
 // LIST FUNCTIONS

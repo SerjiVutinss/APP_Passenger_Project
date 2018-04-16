@@ -151,7 +151,7 @@ int main() {
 				}
 				else if (reportType == 2) {
 					// born before 1980
-					runBornBeforeReport(headPtr, 1980);
+					runBornBeforeReport(headPtr);
 				}
 
 			} while (reportType < 1 && reportType>2);
