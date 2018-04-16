@@ -10,6 +10,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<ctype.h>
 
 // custom libraries
 #include "structs.h" // the data structures and globals used all across the program
@@ -26,12 +27,14 @@ int menuDisplayUpdate(struct Passenger* headPtr, int type);
 // main function
 int main() {
 
-
 	struct Passenger* headPtr = NULL;
 
 	int i;
 	int menuSelection = 0; // main menu loop
-	int qryPassportNumber, queryResult; // used to perform lookups
+	int qryPassportNumber, queryResult, chkPassportNumber; // used to perform lookups
+
+	char userInput[USERNAME_MAX_LEN];
+
 	char qryFirstName[50], qryLastName[50];
 	int searchType = 0;
 	int reportType = 0;
@@ -53,6 +56,8 @@ int main() {
 	//runLoginLoop();
 	////// end login loop
 
+	//isInteger();
+
 	//// start main menu
 	do {
 		// display all menu options
@@ -69,22 +74,35 @@ int main() {
 
 		// get the user's choice
 		printf("\nPlease choose an option: ");
-		scanf("%d", &menuSelection);
+		//scanf("%d", &menuSelection);
+
+		scanf(" %s", userInput);
+		menuSelection = stringToInt(userInput);
+
 		printf("\n");
 		switch (menuSelection) {
 		case 1:
-			printf("Add a new passenger\n");
+			printf("Add a new passenger - Passport number must be greater than 0\n");
 			// ask for the passenger's passport number before continuing
 			printf("Please enter the passenger's passport number: ");
-			scanf("%d", &qryPassportNumber);
-			queryResult = passengerPassportExists(headPtr, qryPassportNumber);
-			if (queryResult == -1) {
-				// passport number not found, proceed with insertion, passing in the passport number
-				insert(&headPtr, inputPassenger(qryPassportNumber));
+			scanf(" %s", userInput); // get the input
+			qryPassportNumber = stringToInt(userInput); // return 0 is cannot convert to int
+
+			// valid passport number was entered
+			if (qryPassportNumber != 0) {
+
+				queryResult = passengerPassportExists(headPtr, qryPassportNumber);
+				if (queryResult == -1) {
+					// passport number not found, proceed with insertion, passing in the passport number
+					insert(&headPtr, inputPassenger(qryPassportNumber));
+				}
+				else {
+					// passport number was found, cannot insert
+					printf("\nA passenger with passport number %d already exists, aborting\n", qryPassportNumber);
+				}
 			}
 			else {
-				// passport number was found, cannot insert
-				printf("\nA passenger with passport number %d already exists, aborting\n", qryPassportNumber);
+				printf("\nAn invalid passport number was entered, aborting\n");
 			}
 			break;
 		case 2:
@@ -110,7 +128,7 @@ int main() {
 
 			// set query result to the index of the passenger if found, else it will be -1
 			queryResult = passengerPassportExists(headPtr, qryPassportNumber);
-			
+
 			if (queryResult != -1) { // passenger was found
 				// passenger found, proceed with deletion, passing in the position in the list, i.e. index
 				delete(&headPtr, queryResult);
@@ -183,7 +201,7 @@ int main() {
 	return 0;
 }
 
-// search for and either display or update a passenger
+// search for and either display or update a passenger based on supplied 'type' parameter
 int menuDisplayUpdate(struct Passenger* headPtr, int type) {
 	// if(type==0) display
 	// if(type==1) update
@@ -238,8 +256,10 @@ int menuDisplayUpdate(struct Passenger* headPtr, int type) {
 				printf("\nA passenger with passport number %d was not found, aborting\n", qryPassportNumber);
 			}
 			break;
+		default:
+			printf("\nInvalid choice\n");
 		}
 
-	} while (searchType < 1 || searchType > 2);
+	} while (searchType < 1 || searchType > 2); // validate the user's choice
 	searchType = 0; // reset this variable
 }

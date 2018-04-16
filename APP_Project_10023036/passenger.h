@@ -25,7 +25,5 @@ void displayPassenger(struct Passenger* passenger);
 // return 1 if supplied string is a valid email format, else return 0
 int isValidEmail(char emailAddress[]);
 
-int Check_Email_Addr(char *EM_Addr);
-
 #endif // PASSENGER_H
 

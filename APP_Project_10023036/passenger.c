@@ -45,6 +45,7 @@ void updatePassenger(struct Passenger* passenger) {
 // only called from this file so static - no return type since struct is updated
 static void getPassengerEditableInfo(struct Passenger* passenger) {
 
+	char userInput[USERNAME_MAX_LEN];
 	int userChoice = -1;
 	int emailIsValid = -1;
 	int i = 0;
@@ -62,8 +63,7 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 		else {
 			printf("Email address accepted\n");
 		}
-	}
-	while (emailIsValid != 1);
+	} while (emailIsValid != 1);
 
 	// select travel area - loop until valid choice entered
 	do {
@@ -72,7 +72,8 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 			printf("\n\t%d. %s", i + 1, travelAreas[i].value);
 		}
 		printf("\nPlease select: ");
-		scanf("%d", &userChoice);
+		scanf(" %s", userInput); // get the input
+		userChoice = stringToInt(userInput); // validate as integer
 
 		if (userChoice <= 0 || userChoice > NUM_TRAVEL_AREAS) {
 			printf("\nThat was not a valid selection, please try again");
@@ -90,7 +91,8 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 			printf("\n\t%d. %s", i + 1, travelClasses[i].value);
 		}
 		printf("\nPlease select: ");
-		scanf("%d", &userChoice);
+		scanf(" %s", userInput); // get the input
+		userChoice = stringToInt(userInput); // validate as integer
 
 		if (userChoice <= 0 || userChoice > NUM_TRAVEL_CLASSES) {
 			printf("\nThat was not a valid selection, please try again");
@@ -98,7 +100,7 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 		}
 
 	} while (userChoice == -1);
-	passenger->travelClass = userChoice - 1;
+	passenger->travelClass = userChoice - 1; // offset since we need the array index
 	userChoice = -1; // reset this variable for reuse
 
 	// select number of trips - loop until valid choice entered
@@ -108,7 +110,8 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 			printf("\n\t%d. %s", i + 1, tripsPerYear[i].message);
 		}
 		printf("\nPlease select: ");
-		scanf("%d", &userChoice);
+		scanf(" %s", userInput); // get the input
+		userChoice = stringToInt(userInput); // validate as integer
 
 		if (userChoice <= 0 || userChoice > NUM_TRIPS_PER_YEAR) {
 			printf("\nThat was not a valid selection, please try again");
@@ -116,7 +119,7 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 		}
 
 	} while (userChoice == -1);
-	passenger->tripsPerYear = userChoice - 1;
+	passenger->tripsPerYear = userChoice - 1; // offset since we need the array index
 	userChoice = -1; // reset this variable for reuse
 
 	// select trip duration - loop until valid choice entered
@@ -126,7 +129,8 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 			printf("\n\t%d. %s", i + 1, tripDuration[i].message);
 		}
 		printf("\nPlease select: ");
-		scanf("%d", &userChoice);
+		scanf(" %s", userInput); // get the input
+		userChoice = stringToInt(userInput); // validate as integer
 
 		if (userChoice <= 0 || userChoice > NUM_TRIP_DURATION) {
 			printf("\nThat was not a valid selection, please try again");
@@ -134,28 +138,25 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 		}
 
 	} while (userChoice == -1);
-	passenger->tripAvgDuration = userChoice - 1;
+	passenger->tripAvgDuration = userChoice - 1; // offset since we need the array index
 	userChoice = -1; // reset this variable for reuse
 }
 
 // display the supplied passenger's details
 void displayPassenger(struct Passenger* passenger) {
 
-	int padLen = 35;
-	const char *padding = "                                                                     ";
-
 	printf("\t|-------------------------------------------------------------------------\n");
-	printf("\t|    Passport Number: %d\n", passenger->passportNumber, padLen);
-	printf("\t|         First Name: %s\n", passenger->firstName, padLen);
-	printf("\t|          Last Name: %s\n", passenger->lastName, padLen);
-	printf("\t|          Year Born: %d\n", passenger->yearBorn, padLen);
-	printf("\t|              Email: %s\n", passenger->email, padLen);
+	printf("\t|    Passport Number: %d\n", passenger->passportNumber);
+	printf("\t|         First Name: %s\n", passenger->firstName);
+	printf("\t|          Last Name: %s\n", passenger->lastName);
+	printf("\t|          Year Born: %d\n", passenger->yearBorn);
+	printf("\t|              Email: %s\n", passenger->email);
 
 	// get item and print string from each array using the stored indices
-	printf("\t|     Travelled From: %s\n", travelAreas[passenger->travelledFrom].value, padLen);
-	printf("\t|       Travel Class: %s\n", travelClasses[passenger->travelClass].value, padLen);
-	printf("\t|     Trips Per Year: %s\n", tripsPerYear[passenger->tripsPerYear].message, padLen);
-	printf("\t| Avg. Trip Duration: %s\n", tripDuration[passenger->tripAvgDuration].message, padLen);
+	printf("\t|     Travelled From: %s\n", travelAreas[passenger->travelledFrom].value);
+	printf("\t|       Travel Class: %s\n", travelClasses[passenger->travelClass].value);
+	printf("\t|     Trips Per Year: %s\n", tripsPerYear[passenger->tripsPerYear].message);
+	printf("\t| Avg. Trip Duration: %s\n", tripDuration[passenger->tripAvgDuration].message);
 	printf("\t|-------------------------------------------------------------------------\n");
 }
 
@@ -194,79 +195,3 @@ int isValidEmail(char emailAddress[]) {
 	return 0;
 }
 
-int Check_Email_Addr(char *EM_Addr) {
-	int count = 0;
-	int i = 0;
-	char conv_buf[50];
-	char *c, *domain;
-	char *special_chars = "()<>@,;:\"[]";
-
-	/* The input is in EBCDIC so convert to ASCII first */
-	//strcpy(conv_buf, EM_Addr);
-	//EtoA(conv_buf);
-	///* convert the special chars to ASCII */
-	//EtoA(special_chars);
-
-	for (c = conv_buf; *c; c++) {
-		/* if '"' and beginning or previous is a '.' or '"' */
-		if (*c == 34 && (c == conv_buf || *(c - 1) == 46 || *(c - 1) == 34)) {
-			while (*++c) {
-				/* if '"' break, End of name */
-				if (*c == 34)
-					break;
-				/* if '' and ' ' */
-				if (*c == 92 && (*++c == 32))
-					continue;
-				/* if not between ' ' & '~' */
-				if (*c <= 32 || *c > 127)
-					return 0;
-			}
-			/* if no more characters error */
-			if (!*c++)
-				return 0;
-			/* found '@' */
-			if (*c == 64)
-				break;
-			/* '.' required */
-			if (*c != 46)
-				return 0;
-			continue;
-		}
-		if (*c == 64) {
-			break;
-		}
-		/* make sure between ' ' && '~' */
-		if (*c <= 32 || *c > 127) {
-			return 0;
-		}
-		/* check special chars */
-		if (strchr(special_chars, *c)) {
-			return 0;
-		}
-	} /* end of for loop */
-	  /* found '@' */
-	  /* if at beginning or previous = '.' */
-	if (c == conv_buf || *(c - 1) == 46)
-		return 0;
-	/* next we validate the domain portion */
-	/* if the next character is NULL */
-	/* need domain ! */
-	if (!*(domain = ++c))
-		return 0;
-	do {
-		/* if '.' */
-		if (*c == 46) {
-			/* if beginning or previous = '.' */
-			if (c == domain || *(c - 1) == 46)
-				return 0;
-			/* count '.' need at least 1 */
-			count++;
-		}
-		/* make sure between ' ' and '~' */
-		if (*c <= 32 || *c >= 127)
-			return 0;
-		if (strchr(special_chars, *c))
-			return 0;
-	} while (*++c); /* while valid char */
-	return (count >= 1); /* return true if more than 1 '.' */
-}

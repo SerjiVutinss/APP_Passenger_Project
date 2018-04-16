@@ -74,3 +74,26 @@ void initialiseArrays() {
 	tripDuration[3].maxVal = INT_MAX;
 	strcpy(tripDuration[3].message, "More than 7 days");
 }
+
+// return 0 if string cannot be converted to int, else return converted value
+int stringToInt(char *s) {
+	int i = 0, isNumeric = -1;
+	// check if first character is a minus sign
+	if (s[i] == '-') {
+		i += 1;
+	}
+
+	//Start from the next character
+	while (s[i] != '\0') {
+		if (isdigit(s[i])) {
+			i += 1;
+		}
+		else {
+			printf("Not Numeric");
+			return 0;
+		}
+	}
+	// only get out of loop if entire string is numeric
+	printf("Numeric");
+	return atoi(s);
+}
