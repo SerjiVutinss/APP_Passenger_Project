@@ -53,7 +53,7 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 	// validate email address
 	do {
 		// email
-		printf("Email address: ");
+		printf("\nEmail address: ");
 		scanf("%s", passenger->email);
 
 		emailIsValid = isValidEmail(passenger->email);
@@ -76,7 +76,7 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 		userChoice = stringToInt(userInput); // validate as integer
 
 		if (userChoice <= 0 || userChoice > NUM_TRAVEL_AREAS) {
-			printf("\nThat was not a valid selection, please try again");
+			printf("\n\nThat was not a valid selection, please try again!\n");
 			userChoice = -1;
 		}
 
@@ -95,7 +95,7 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 		userChoice = stringToInt(userInput); // validate as integer
 
 		if (userChoice <= 0 || userChoice > NUM_TRAVEL_CLASSES) {
-			printf("\nThat was not a valid selection, please try again");
+			printf("\n\nThat was not a valid selection, please try again!\n");
 			userChoice = -1;
 		}
 
@@ -114,7 +114,7 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 		userChoice = stringToInt(userInput); // validate as integer
 
 		if (userChoice <= 0 || userChoice > NUM_TRIPS_PER_YEAR) {
-			printf("\nThat was not a valid selection, please try again");
+			printf("\n\nThat was not a valid selection, please try again!\n");
 			userChoice = -1;
 		}
 
@@ -133,7 +133,7 @@ static void getPassengerEditableInfo(struct Passenger* passenger) {
 		userChoice = stringToInt(userInput); // validate as integer
 
 		if (userChoice <= 0 || userChoice > NUM_TRIP_DURATION) {
-			printf("\nThat was not a valid selection, please try again");
+			printf("\n\nThat was not a valid selection, please try again!\n");
 			userChoice = -1;
 		}
 

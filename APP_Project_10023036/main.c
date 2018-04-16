@@ -27,6 +27,7 @@ int menuDisplayUpdate(struct Passenger* headPtr, int type);
 // main function
 int main() {
 
+
 	struct Passenger* headPtr = NULL;
 
 	int i;
@@ -257,7 +258,7 @@ int menuDisplayUpdate(struct Passenger* headPtr, int type) {
 			}
 			break;
 		default:
-			printf("\nInvalid choice\n");
+			printf("\nInvalid choice!\n\n");
 		}
 
 	} while (searchType < 1 || searchType > 2); // validate the user's choice

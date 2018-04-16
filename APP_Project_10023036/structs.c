@@ -75,25 +75,26 @@ void initialiseArrays() {
 	strcpy(tripDuration[3].message, "More than 7 days");
 }
 
-// return 0 if string cannot be converted to int, else return converted value
+// return 0 if string cannot be converted to int, else return converted value:
+// the function can accept strings with a minus sign as first character, needed for
+// the main menu exit option.
 int stringToInt(char *s) {
 	int i = 0, isNumeric = -1;
 	// check if first character is a minus sign
 	if (s[i] == '-') {
-		i += 1;
+		i += 1; // if minus sign found, move to next char
 	}
-
-	//Start from the next character
+	// loop from current char
 	while (s[i] != '\0') {
 		if (isdigit(s[i])) {
+			// if each char is a digit, keep looping
 			i += 1;
 		}
 		else {
-			printf("Not Numeric");
+			// non-digit char found, return 0 from function
 			return 0;
 		}
 	}
 	// only get out of loop if entire string is numeric
-	printf("Numeric");
-	return atoi(s);
+	return atoi(s); // return the converted string to int
 }
