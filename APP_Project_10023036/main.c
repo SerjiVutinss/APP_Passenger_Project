@@ -6,6 +6,20 @@
 	  Email:	10023036@gmit.ie
 */
 
+/*
+ * This file contains the main method for program execution.
+ *
+ * After variable declaration, the data arrays used by the program are initialised
+ * by calling the initialiseArrays() function from structs.h/c
+ *
+ * The login loop is then run from login.h/c to authneticate the user against the details in login_details.txt
+ *
+ * Once a user has been authenticated, the main menu loop is run and the user is asked to make a selection:
+ *   * The user must enter an integer
+ *   * The user make a valid selection from the list of options
+ *
+*/
+
 // standard libraries
 #include<stdio.h>
 #include<stdlib.h>
@@ -27,37 +41,37 @@ int menuDisplayUpdate(struct Passenger* headPtr, int type);
 // main function
 int main() {
 
-
+	//// BEGIN Variable Declarations
+	// head of the linked list
 	struct Passenger* headPtr = NULL;
 
-	int i;
+	int i; // loop counter
 	int menuSelection = 0; // main menu loop
-	int qryPassportNumber, queryResult, chkPassportNumber; // used to perform lookups
+	int qryPassportNumber, queryResult; // used to perform lookups on passengers
 
+	// used to store user input for menu selections to be validated - 
+	// it is most often passed in to the stringToInt() function (structs.h/c)
 	char userInput[USERNAME_MAX_LEN];
 
+	// used to perform lookup of a passenger with existing first and last name
 	char qryFirstName[50], qryLastName[50];
+
+	// used to store menu choices
 	int searchType = 0;
 	int reportType = 0;
 	int travelClassType = 0;
+	//// END Variable Declarations
 
-	initialiseArrays();
 
-	/*char email1[25] = "jservis";
-	char email2[25] = "a.com@gmail";
-	char email3[25] = "asdd@l.com";
+	// initialise data arrays used for passenger details
+	initialiseArrays(); // function in structs.h/c
 
-	printf("\n%s is %d\n\n", email1, isValidEmail(email1));
-	printf("\n%s is %d\n\n", email2, isValidEmail(email2));
-	printf("\n%s is %d\n\n", email3, isValidEmail(email3));*/
-
-	restore(&headPtr);
+	// restore any records contained in database.txt
+	restore(&headPtr); // function in database.h/c
 
 	////// start login loop
 	//runLoginLoop();
 	////// end login loop
-
-	//isInteger();
 
 	//// start main menu
 	do {
@@ -87,14 +101,17 @@ int main() {
 			// ask for the passenger's passport number before continuing
 			printf("Please enter the passenger's passport number: ");
 			scanf(" %s", userInput); // get the input
-			qryPassportNumber = stringToInt(userInput); // return 0 is cannot convert to int
+			qryPassportNumber = stringToInt(userInput); // returns 0 if cannot convert to int
 
-			// valid passport number was entered
-			if (qryPassportNumber != 0) {
+			if (qryPassportNumber != 0) { // if a valid passport number was entered
 
+				// check to see if this passport number already exists in linked list
 				queryResult = passengerPassportExists(headPtr, qryPassportNumber);
-				if (queryResult == -1) {
-					// passport number not found, proceed with insertion, passing in the passport number
+
+				if (queryResult == -1) { // passport number not found
+					// proceed with passenger input followed by insertion
+					// inputPassenger() in passenger.c/h asks user for input of user details
+					// insert() in database.h/c inserts the passenger into the sorted linked list
 					insert(&headPtr, inputPassenger(qryPassportNumber));
 				}
 				else {
@@ -102,7 +119,7 @@ int main() {
 					printf("\nA passenger with passport number %d already exists, aborting\n", qryPassportNumber);
 				}
 			}
-			else {
+			else { // passport number was not a valid number
 				printf("\nAn invalid passport number was entered, aborting\n");
 			}
 			break;
@@ -114,7 +131,7 @@ int main() {
 		case 3:
 			printf("Display a passenger's details\n");
 			// get input and display passenger
-			menuDisplayUpdate(headPtr, 0);
+			menuDisplayUpdate(headPtr, 0); // function in this file after main()
 			break;
 		case 4:
 			printf("Update a passenger\n");
@@ -125,29 +142,37 @@ int main() {
 			printf("Delete a passenger\n");
 			// ask for the passenger's passport number before continuing
 			printf("Please enter the passenger's passport number: ");
-			scanf("%d", &qryPassportNumber);
+			scanf(" %s", userInput); // get the input
+			qryPassportNumber = stringToInt(userInput); // returns 0 if cannot convert to int
 
+			if (qryPassportNumber != 0) { // if a valid passport number was entered
 			// set query result to the index of the passenger if found, else it will be -1
-			queryResult = passengerPassportExists(headPtr, qryPassportNumber);
+				queryResult = passengerPassportExists(headPtr, qryPassportNumber);
 
-			if (queryResult != -1) { // passenger was found
-				// passenger found, proceed with deletion, passing in the position in the list, i.e. index
-				delete(&headPtr, queryResult);
-				printf("Passenger with Passport Number %d was deleted\n", qryPassportNumber);
+				if (queryResult != -1) { // passenger was found
+					// passenger found, proceed with deletion, passing in the position in the list, i.e. index
+					delete(&headPtr, queryResult);
+					printf("Passenger with Passport Number %d was deleted\n", qryPassportNumber);
+				}
+				else { // passenger not found
+					printf("\nA passenger with passport number %d was not found, aborting\n", qryPassportNumber);
+				}
 			}
 			else {
-				printf("\nA passenger with passport number %d was not found, aborting\n", qryPassportNumber);
+				// passport number was not a valid number
+				printf("\nAn invalid passport number was entered, aborting\n");
 			}
 			break;
 		case 6:
 			printf("Display Reports\n");
 
-			do {
+			do { // loop until valid input received
 				printf("Which set of reports would you like to see?\n");
 				printf("1. Travel Class\n");
 				printf("2. Born Before 1980\n");
 				printf("Please select: ");
-				scanf("%d", &reportType);
+				scanf(" %s", userInput); // get the input
+				reportType = stringToInt(userInput); // returns 0 if cannot convert to int
 
 				if (reportType == 1) {
 					// by travel class
@@ -157,24 +182,29 @@ int main() {
 							printf("%d. %s\n", i + 1, travelClasses[i].value);
 						}
 						printf("Please select: ");
-						scanf("%d", &travelClassType);
+						scanf(" %s", userInput); // get the input
+						travelClassType = stringToInt(userInput); // returns 0 if cannot convert to int
 
+						// validate input was a list option
 						if (travelClassType < 1 || travelClassType > NUM_TRAVEL_CLASSES) {
-							printf("That was not a valid selection, please try again\n");
+							printf("That was not a valid selection, please try again\n"); // loop
 						}
 
 					} while (travelClassType < 1 || travelClassType > NUM_TRAVEL_CLASSES);
 
-					// valid travel class selected - run report
+					// valid travel class selected - run report - reports.h/c
 					runTravelClassReports(headPtr, travelClassType);
 				}
-				else if (reportType == 2) {
-					// born before 1980
-					runBornBeforeReport(headPtr);
+				else if (reportType == 2) { // born before 1980
+					runBornBeforeReport(headPtr); // show the relevant report - reports.h/c
+				}
+				else { // number was neither 1 nor 2, keep looping
+					printf("\nAn invalid number was entered, aborting\n");
 				}
 
-			} while (reportType < 1 && reportType>2);
+			} while (reportType < 1 || reportType > 2); // loop condition for 2 options
 			break;
+
 		case 7:
 			printf("Save all details to file\n");
 			saveDetailsToFile(headPtr);

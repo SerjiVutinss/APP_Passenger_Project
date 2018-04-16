@@ -78,20 +78,27 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 			curr = curr->NEXT; // move along the list
 		} // end while
 
-		printf("\nShowing Travel Class Report:\n"); // show this report
-		showReport(
-			totalCount,
-			countUK,
-			countEurope,
-			countAsia,
-			countAfrica,
-			countAmericas,
-			countAustralasia,
-			countOneDay,
-			countLessThanThreeDays,
-			countLessThanSevenDays,
-			countMoreThanSevenDays
-		);
+		if (totalCount > 0) { // only show report if there are matches
+
+			printf("\n\tShowing Travel Class Report for %s: ", travelClasses[travelClassType].value); // show this report
+			printf("%d matches\n", totalCount);
+			showReport(
+				totalCount,
+				countUK,
+				countEurope,
+				countAsia,
+				countAfrica,
+				countAmericas,
+				countAustralasia,
+				countOneDay,
+				countLessThanThreeDays,
+				countLessThanSevenDays,
+				countMoreThanSevenDays
+			);
+		}
+		else { // no matches for this report and criteria
+			printf("\nNo matches for these criteria, nothing to display\n");
+		}
 	}
 	else {
 		printf("The database is empty\n"); // no records found
@@ -172,20 +179,27 @@ void runBornBeforeReport(struct Passenger* head) {
 			curr = curr->NEXT; // move along the list
 		} // end while
 
-		printf("\nShowing Travel Class Report:\n"); // show this report
-		showReport(
-			totalCount,
-			countUK,
-			countEurope,
-			countAsia,
-			countAfrica,
-			countAmericas,
-			countAustralasia,
-			countOneDay,
-			countLessThanThreeDays,
-			countLessThanSevenDays,
-			countMoreThanSevenDays
-		);
+		if (totalCount > 0) { // only show report if there were matches
+
+			printf("\n\tShowing Report for passengers born before 1980: "); // show this report
+			printf("%d matches\n", totalCount);
+			showReport(
+				totalCount,
+				countUK,
+				countEurope,
+				countAsia,
+				countAfrica,
+				countAmericas,
+				countAustralasia,
+				countOneDay,
+				countLessThanThreeDays,
+				countLessThanSevenDays,
+				countMoreThanSevenDays
+			);
+		}
+		else { // no matches for this report and criteria
+			printf("\nNo matches for these criteria, nothing to display\n");
+		}
 	}
 	else {
 		printf("The database is empty\n"); // no records found
@@ -233,6 +247,9 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head) {
 				}
 				curr = curr->NEXT; // move the pointer along the list
 			}
+		}
+		if (numAdded == 0) {
+			printf("\nNothing to display for this report\n");
 		}
 	}
 }
