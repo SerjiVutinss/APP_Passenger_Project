@@ -107,10 +107,14 @@ int main() {
 			// ask for the passenger's passport number before continuing
 			printf("Please enter the passenger's passport number: ");
 			scanf("%d", &qryPassportNumber);
+
+			// set query result to the index of the passenger if found, else it will be -1
 			queryResult = passengerPassportExists(headPtr, qryPassportNumber);
-			if (queryResult != -1) {
-				// passenger found, proceed with deletion, passing in the passport number
+			
+			if (queryResult != -1) { // passenger was found
+				// passenger found, proceed with deletion, passing in the position in the list, i.e. index
 				delete(&headPtr, queryResult);
+				printf("Passenger with Passport Number %d was deleted\n", qryPassportNumber);
 			}
 			else {
 				printf("\nA passenger with passport number %d was not found, aborting\n", qryPassportNumber);
@@ -154,6 +158,7 @@ int main() {
 			break;
 		case 7:
 			printf("Save all details to file\n");
+			saveDetailsToFile(headPtr);
 			break;
 		case 8:
 			printf("List all passengers travelling from the U.K. in order of their birth year\n");
