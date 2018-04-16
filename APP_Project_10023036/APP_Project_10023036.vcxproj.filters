@@ -33,6 +33,9 @@
     <ClCompile Include="passenger.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="validation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="database.h">
@@ -48,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="passenger.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="validation.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

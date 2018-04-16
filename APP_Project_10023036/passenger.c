@@ -1,28 +1,70 @@
 #include "passenger.h"
 
 #include<stdlib.h>
+#include<string.h>
+
 #include "structs.h"
+#include "validation.h"
 
 
 // get all the passenger related data from the user and return a passenger pointer
 struct Passenger* inputPassenger(int passportNumber) {
 	int i;
 	int userChoice = -1;
+	char userInput[USERNAME_MAX_LEN]; // use this to validate year of birth
+	int yearOfBirth = 0;
+	int nameLength = 0;
+	int nameIsValid = 0;
 	struct Passenger* passenger;
 	passenger = (struct Passenger*)malloc(sizeof(struct Passenger));
 	passenger->passportNumber = passportNumber;
 
 	printf("Please enter the new Passenger's details:");
 
-	// first name
-	printf("\nFirst Name: ");
-	scanf("%s", passenger->firstName);
-	// last name
-	printf("Last Name: ");
-	scanf("%s", passenger->lastName);
-	// year born
-	printf("Year Born: ");
-	scanf("%d", &passenger->yearBorn);
+	// first name validation
+	do {
+		printf("\nFirst Name: ");
+		scanf("%s", userInput);
+		//nameLength = strlen(userInput);
+		nameIsValid = isValidName(userInput);
+
+		if (nameIsValid) {
+			strcpy(passenger->firstName, userInput);
+		}
+		else {
+			printf("\nInvalid input: names must be at least 2 characters long and cannot contain numbers\n");
+		}
+	} while (!nameIsValid);
+
+	// last name validation
+	do {
+		printf("\nLast Name: ");
+		scanf("%s", userInput);
+		//nameLength = strlen(userInput);
+		nameIsValid = isValidName(userInput);
+
+		if (nameIsValid) {
+			strcpy(passenger->lastName, userInput);
+		}
+		else {
+			printf("\nInvalid input: names must be at least 2 characters long and cannot contain numbers\n");
+		}
+	} while (!nameIsValid);
+
+
+	// year born validation
+	do {
+		printf("Year Born: ");
+		scanf(" %s", userInput);
+		yearOfBirth = stringToInt(userInput);
+		if (isValidYear(yearOfBirth)) {
+			passenger->yearBorn = yearOfBirth;
+		}
+		else {
+			printf("\nThat was not a valid year of birth, valid years \n");
+			printf("are years between %d and %d inclusive.\n", MIN_YEAR, getCurrentYear());
+		}
+	} while (!isValidYear(yearOfBirth));
 
 	// call the static method in this file
 	getPassengerEditableInfo(passenger);
@@ -194,4 +236,3 @@ int isValidEmail(char emailAddress[]) {
 	}
 	return 0;
 }
-

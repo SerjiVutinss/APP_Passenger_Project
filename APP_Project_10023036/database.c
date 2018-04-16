@@ -108,8 +108,6 @@ int passengerPassportExists(struct Passenger* head, int passportNumber) {
 	if (curr != NULL) {
 		while (curr != NULL) {
 			if (curr->passportNumber == passportNumber) {
-				// FOUND
-				//printf("\n\nFOUND\n\n");
 				return count;
 			}
 			curr = curr->NEXT;

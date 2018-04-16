@@ -148,6 +148,7 @@
     <ClCompile Include="passenger.c" />
     <ClCompile Include="reports.c" />
     <ClCompile Include="structs.c" />
+    <ClCompile Include="validation.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="database.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="passenger.h" />
     <ClInclude Include="reports.h" />
     <ClInclude Include="structs.h" />
+    <ClInclude Include="validation.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="database.txt" />

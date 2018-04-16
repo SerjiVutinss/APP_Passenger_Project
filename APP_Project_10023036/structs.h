@@ -25,7 +25,6 @@
 
 // initialise and populate the helper arrays with data
 void initialiseArrays();
-int stringToInt(char *s);
 
 // user struct used for login purposes
 typedef struct User {
