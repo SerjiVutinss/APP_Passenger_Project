@@ -7,6 +7,7 @@
 static FILE* loginFPtr;  // will be used to read the login_details.txt file
 static User* users; // will be used to contain all users read in from the file
 
+// the only function to be exposed from this module
 void runLoginLoop() {
 	// user input username and password to check and use later
 	int i, numUsers;
@@ -69,6 +70,7 @@ void runLoginLoop() {
 	free(users);
 }
 
+// read all user details from the file into the dynamic "users" array
 static int readUserDetailsFromFile() {
 	int count = 0;
 	char c;
@@ -110,6 +112,7 @@ static int readUserDetailsFromFile() {
 	return count;
 }
 
+// check a username and password against the "users" array
 static int checkLoginDetails(char username[], char password[], int numUsers) {
 
 	int i; // local loop variable

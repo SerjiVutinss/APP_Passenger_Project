@@ -9,15 +9,18 @@
 /*
  * This file contains the main method for program execution.
  *
- * After variable declaration, the data arrays used by the program are initialised
- * by calling the initialiseArrays() function from structs.h/c
+ * After variable declaration, the login loop is then run from login.h/c to 
+ * authenticate the user against the details in login_details.txt
+ * 
+ * Once a user has been authenticated, the data arrays used by the program are initialised
+ * by calling the initialiseArrays() function from structs.h/c and any data backed up in database.txt
+ * is restored to the sorted linked list by calling restore() in database.h/c
  *
- * The login loop is then run from login.h/c to authneticate the user against the details in login_details.txt
- *
- * Once a user has been authenticated, the main menu loop is run and the user is asked to make a selection:
+ * Finally, the main menu loop is run and the user is asked to make a selection:
  *   * The user must enter an integer
  *   * The user make a valid selection from the list of options
- *
+ *   * The main menu will loop until -1 is entered
+ *   * Sub menus will loop until a valid option is selected
 */
 
 // standard libraries
@@ -31,12 +34,10 @@
 #include "login.h" // the login module handles all login related tasks
 #include "database.h" // linked list (database) operations
 #include "reports.h" // reporting related functions
-#include "passenger.h"
-#include "validation.h"
+#include "passenger.h" // passenger related functions, e.g. inputPassenger, displayPassenger
+#include "validation.h" // some validators used across the program
 
-  // will be used to read the login_details.txt file
-User* users; // will be used to contain all users read in from the file
-
+// prototype - function to displaya a sub menu, details in function comments
 int menuDisplayUpdate(struct Passenger* headPtr, int type);
 
 // main function
@@ -47,7 +48,7 @@ int main() {
 	struct Passenger* headPtr = NULL;
 
 	int i; // loop counter
-	int menuSelection = 0; // main menu loop
+	int menuSelection = 0; // main menu loop selection
 	int qryPassportNumber, queryResult; // used to perform lookups on passengers
 
 	// used to store user input for menu selections to be validated - 
@@ -55,7 +56,7 @@ int main() {
 	char userInput[USERNAME_MAX_LEN];
 
 	// used to perform lookup of a passenger with existing first and last name
-	char qryFirstName[50], qryLastName[50];
+	char qryFirstName[USERNAME_MAX_LEN], qryLastName[USERNAME_MAX_LEN];
 
 	// used to store menu choices
 	int searchType = 0;
@@ -64,15 +65,15 @@ int main() {
 	//// END Variable Declarations
 
 
+	//// start login loop
+	runLoginLoop();
+	//// end login loop
+
 	// initialise data arrays used for passenger details
 	initialiseArrays(); // function in structs.h/c
 
 	// restore any records contained in database.txt
 	restore(&headPtr); // function in database.h/c
-
-	////// start login loop
-	//runLoginLoop();
-	////// end login loop
 
 	//// start main menu
 	do {
@@ -234,11 +235,11 @@ int main() {
 
 		case 7:
 			printf("Save all details to file\n");
-			saveDetailsToFile(headPtr);
+			saveDetailsToFile(headPtr); // database.h/c
 			break;
 		case 8:
 			printf("List all passengers travelling from the U.K. in order of their birth year\n");
-			runOrderedUKYearOfBirthReport(headPtr);
+			runOrderedUKYearOfBirthReport(headPtr); // reports.h/c
 			break;
 		case -1:
 			printf("Exiting\n");
@@ -261,8 +262,8 @@ int main() {
 
 // search for and either display or update a passenger based on supplied 'type' parameter
 int menuDisplayUpdate(struct Passenger* headPtr, int type) {
-	// if(type==0) display
-	// if(type==1) update
+	// if(type==0) display a passenger
+	// if(type==1) update a passenger
 
 	int searchType = -1;
 	int qryPassportNumber, qryResult;
@@ -284,9 +285,11 @@ int menuDisplayUpdate(struct Passenger* headPtr, int type) {
 			if (qryResult != -1) {
 				// passenger found, proceed with update or display, passing in the passport number
 				if (type == 1) {
+					// passenger.h/c -  database.h/c
 					updatePassenger(getPassengerByIndex(headPtr, qryResult));
 				}
 				else {
+					// passenger.h/c -  database.h/c
 					displayPassenger(getPassengerByIndex(headPtr, qryResult));
 				}
 			}
@@ -300,13 +303,17 @@ int menuDisplayUpdate(struct Passenger* headPtr, int type) {
 			scanf("%s", &qryFirstName);
 			printf("Please enter the passenger's last name: ");
 			scanf("%s", &qryLastName);
+
+			// if a passenger is found with matching names, returns passengerIndex, else returns -1
 			qryResult = passengerNameExists(headPtr, qryFirstName, qryLastName);
 			if (qryResult != -1) {
 				// passenger found, proceed with update, passing in the passport number
 				if (type == 1) {
+					// passenger.h/c -  database.h/c
 					updatePassenger(getPassengerByIndex(headPtr, qryResult));
 				}
 				else {
+					// passenger.h/c -  database.h/c
 					displayPassenger(getPassengerByIndex(headPtr, qryResult));
 				}
 			}

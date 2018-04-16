@@ -124,18 +124,19 @@ int passengerNameExists(struct Passenger* head, char firstName[], char lastName[
 	struct Passenger* curr;
 	curr = head;
 
+	// loop through the list
 	if (curr != NULL) {
-		printf("\n");
 		while (curr != NULL) {
+			// if first and last names match the supplied parameters, return the index
 			if (strcmp(curr->lastName, lastName) == 0 && strcmp(curr->firstName, firstName) == 0) {
-				// FOUND
+				// FOUND, return index
 				return count;
 			}
 			curr = curr->NEXT;
 			count++;
 		}
 	}
-	// NOT FOUND
+	// NOT FOUND, return -1
 	return -1;
 }
 

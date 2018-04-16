@@ -1,12 +1,8 @@
 #ifndef VALIDATION_H
 #define VALIDATION_H
 
-//#include "structs.h"
-
 /*  This file and its associated program file contain methods related to the
-*	validation of passenger details and related constants
-*  
-*  
+*	validation of passenger details and related constant, i.e. MIN_YEAR  
 */
 
 // minimum year of birth
