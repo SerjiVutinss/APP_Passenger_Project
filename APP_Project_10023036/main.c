@@ -9,9 +9,9 @@
 /*
  * This file contains the main method for program execution.
  *
- * After variable declaration, the login loop is then run from login.h/c to 
+ * After variable declaration, the login loop is then run from login.h/c to
  * authenticate the user against the details in login_details.txt
- * 
+ *
  * Once a user has been authenticated, the data arrays used by the program are initialised
  * by calling the initialiseArrays() function from structs.h/c and any data backed up in database.txt
  * is restored to the sorted linked list by calling restore() in database.h/c
@@ -42,7 +42,7 @@ int menuDisplayUpdate(struct Passenger* headPtr, int type);
 
 // main function
 int main() {
-	
+
 	//// BEGIN Variable Declarations
 	// head of the linked list
 	struct Passenger* headPtr = NULL;
@@ -211,6 +211,7 @@ int main() {
 						printf("Would you also like to save the report to file?\n");
 						printf("1. Yes\n");
 						printf("2. No\n");
+						printf("Please select: ");
 						scanf(" %s", userInput);
 						printReportToFile = stringToInt(userInput);
 
@@ -258,6 +259,21 @@ int main() {
 			break;
 		case 8:
 			printf("List all passengers travelling from the U.K. in order of their birth year\n");
+			do {
+
+				printf("Would you also like to save this report to file after viewing?\n");
+				printf("1. Yes\n");
+				printf("2. No\n");
+				printf("Please select: ");
+				scanf(" %s", userInput);
+				printReportToFile = stringToInt(userInput);
+
+				if (printReportToFile < 1 || printReportToFile>2) {
+					printf("That was not a valid selection, please try again\n"); // loop
+				}
+
+			} while (printReportToFile < 1 || printReportToFile>2);
+
 			runOrderedUKYearOfBirthReport(headPtr, printReportToFile); // reports.h/c
 			break;
 		case -1:

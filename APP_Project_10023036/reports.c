@@ -1,5 +1,6 @@
-#include"reports.h"
-#include"structs.h"
+#include "reports.h"
+#include "structs.h"
+#include "passenger.h"
 #include "database.h"
 
 #include<stdio.h>
@@ -84,7 +85,7 @@ void runTravelClassReports(struct Passenger* head, int travelClassType, int save
 
 
 			sprintf(reportTitle, "Showing Travel Class Report for %s: ", travelClasses[travelClassType].value); // show this report
-			
+
 			showSaveReport(
 				totalCount,
 				countUK,
@@ -232,6 +233,23 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head, int saveToFile) {
 	struct Passenger* curr; // pointer to current passenger
 	curr = head; // set the current equal to the head
 
+	FILE* reportFilePtr = NULL;
+	char lineBreak[100] = "\n\t|-------------------------------------------------------------------------\n";
+	char reportTitle[100] = "All passengers travelling from the UK in order of year born (ASC): ";
+
+	printf("%s", lineBreak);
+	printf("\n\t| %s", reportTitle);
+	printf("%s", lineBreak);
+
+	if (saveToFile == 1) {
+		reportFilePtr = fopen("report.txt", "w");
+		if (reportFilePtr != NULL) {
+			fprintf(reportFilePtr, "%s", lineBreak);
+			fprintf(reportFilePtr, "\n\t| %s", reportTitle);
+			fprintf(reportFilePtr, "%s", lineBreak);
+		}
+	}
+
 	if (curr != NULL) { // if list is not empty
 
 		// for each year, loop through the linked list
@@ -251,6 +269,21 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head, int saveToFile) {
 
 							// and display the passenger's details (passenger.c)
 							displayPassenger(curr);
+
+							if (reportFilePtr != NULL) {
+								fprintf(reportFilePtr, "\t|    Passport Number: %d\n", curr->passportNumber);
+								fprintf(reportFilePtr, "\t|         First Name: %s\n", curr->firstName);
+								fprintf(reportFilePtr, "\t|          Last Name: %s\n", curr->lastName);
+								fprintf(reportFilePtr, "\t|          Year Born: %d\n", curr->yearBorn);
+								fprintf(reportFilePtr, "\t|              Email: %s\n", curr->email);
+
+								// get item and print string from each array using the stored indices
+								fprintf(reportFilePtr, "\t|     Travelled From: %s\n", travelAreas[curr->travelledFrom].value);
+								fprintf(reportFilePtr, "\t|       Travel Class: %s\n", travelClasses[curr->travelClass].value);
+								fprintf(reportFilePtr, "\t|     Trips Per Year: %s\n", tripsPerYear[curr->tripsPerYear].message);
+								fprintf(reportFilePtr, "\t| Avg. Trip Duration: %s", tripDuration[curr->tripAvgDuration].message);
+								fprintf(reportFilePtr, "%s", lineBreak);
+							}
 							numAdded++; // increment so another passenger can be added
 						}
 					}
@@ -258,9 +291,13 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head, int saveToFile) {
 				curr = curr->NEXT; // move the pointer along the list
 			}
 		}
+		if (reportFilePtr != NULL) {
+			fclose(reportFilePtr);
+		}
 		if (numAdded == 0) {
 			printf("\nNothing to display for this report\n");
 		}
+		reportFilePtr = NULL;
 	}
 }
 
@@ -333,6 +370,8 @@ static void showSaveReport(
 		reportFilePtr = fopen("report.txt", "w");
 		if (reportFilePtr != NULL) {
 			fprintf(reportFilePtr, "%s", lineBreak);
+			fprintf(reportFilePtr, "\t| %s", reportTitle);
+			fprintf(reportFilePtr, "%d matches", totalCount);
 			fprintf(reportFilePtr, "%s", lineBreak);
 			fprintf(reportFilePtr, "\t|   Area travelled from:\n");
 			fprintf(reportFilePtr, "\t|            UK: %.2f\n", percentUK);
@@ -340,15 +379,16 @@ static void showSaveReport(
 			fprintf(reportFilePtr, "\t|          Asia: %.2f\n", percentAsia);
 			fprintf(reportFilePtr, "\t|        Africa: %.2f\n", percentAfrica);
 			fprintf(reportFilePtr, "\t|      Americas: %.2f\n", percentAmericas);
-			fprintf(reportFilePtr, "\t|   Australasia: %.2f\n", percentAustralasia);
+			fprintf(reportFilePtr, "\t|   Australasia: %.2f", percentAustralasia);
 			fprintf(reportFilePtr, "%s", lineBreak);
 			fprintf(reportFilePtr, "\t|   Average Trip duration:\n");
 			fprintf(reportFilePtr, "\t|       One Day: %.2f\n", percentOneDay);
 			fprintf(reportFilePtr, "\t|      < 3 Days: %.2f\n", percentLessThanThreeDays);
 			fprintf(reportFilePtr, "\t|      < 7 Days: %.2f\n", percentLessThanSevenDays);
-			fprintf(reportFilePtr, "\t|      > 7 Days: %.2f\n", percentMoreThanSevenDays);
+			fprintf(reportFilePtr, "\t|      > 7 Days: %.2f", percentMoreThanSevenDays);
 			fprintf(reportFilePtr, "%s", lineBreak);
 			fprintf(reportFilePtr, "\n");
+			fclose(reportFilePtr);
 		}
 		reportFilePtr = NULL;
 	}
