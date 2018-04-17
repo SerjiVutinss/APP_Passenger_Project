@@ -8,7 +8,7 @@
 
 // Spec #6.I - Travel Class Report - takes in the user selected travelClassArray index and passes the 
 // calculated data to showReport()
-void runTravelClassReports(struct Passenger* head, int travelClassType) {
+void runTravelClassReports(struct Passenger* head, int travelClassType, int saveToFile) {
 
 	int totalCount = 0;
 	int countUK = 0;
@@ -21,6 +21,8 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 	int countLessThanThreeDays = 0;
 	int countLessThanSevenDays = 0;
 	int countMoreThanSevenDays = 0;
+
+	char reportTitle[100];
 
 	travelClassType--;
 	struct Passenger* curr; // pointer to current passenger
@@ -80,9 +82,10 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 
 		if (totalCount > 0) { // only show report if there are matches
 
-			printf("\n\tShowing Travel Class Report for %s: ", travelClasses[travelClassType].value); // show this report
-			printf("%d matches\n", totalCount);
-			showReport(
+
+			sprintf(reportTitle, "Showing Travel Class Report for %s: ", travelClasses[travelClassType].value); // show this report
+			
+			showSaveReport(
 				totalCount,
 				countUK,
 				countEurope,
@@ -93,7 +96,9 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 				countOneDay,
 				countLessThanThreeDays,
 				countLessThanSevenDays,
-				countMoreThanSevenDays
+				countMoreThanSevenDays,
+				reportTitle,
+				saveToFile
 			);
 		}
 		else { // no matches for this report and criteria
@@ -107,7 +112,7 @@ void runTravelClassReports(struct Passenger* head, int travelClassType) {
 
 // Spec #6.II - Born Before 1980 Report - takes in the year and passes the 
 // calculated data to showReport() - NOTE: Year is hardcoded as 1980 in main.c as per spec
-void runBornBeforeReport(struct Passenger* head) {
+void runBornBeforeReport(struct Passenger* head, int saveToFile) {
 
 	int totalCount = 0;
 	int countUK = 0;
@@ -122,6 +127,8 @@ void runBornBeforeReport(struct Passenger* head) {
 	int countMoreThanSevenDays = 0;
 
 	int bornBefore = 1980;
+
+	char reportTitle[100];
 
 	//travelClassType--;
 	struct Passenger* curr; // pointer to current passenger
@@ -180,10 +187,11 @@ void runBornBeforeReport(struct Passenger* head) {
 		} // end while
 
 		if (totalCount > 0) { // only show report if there were matches
+			//printf("\n\tShowing Report for passengers born before 1980: "); // show this report
 
-			printf("\n\tShowing Report for passengers born before 1980: "); // show this report
-			printf("%d matches\n", totalCount);
-			showReport(
+			sprintf(reportTitle, "Showing Report for passengers born before 1980: ");
+
+			showSaveReport(
 				totalCount,
 				countUK,
 				countEurope,
@@ -194,7 +202,9 @@ void runBornBeforeReport(struct Passenger* head) {
 				countOneDay,
 				countLessThanThreeDays,
 				countLessThanSevenDays,
-				countMoreThanSevenDays
+				countMoreThanSevenDays,
+				reportTitle,
+				saveToFile
 			);
 		}
 		else { // no matches for this report and criteria
@@ -209,7 +219,7 @@ void runBornBeforeReport(struct Passenger* head) {
 // SPEC #8 - List all the passengers travelling from the UK in order of year born
 // This function calls the static method isAlreadyAdded() (below) and 
 // the displayPassenger() function from passenger.h/c
-void runOrderedUKYearOfBirthReport(struct Passenger* head) {
+void runOrderedUKYearOfBirthReport(struct Passenger* head, int saveToFile) {
 
 	int i = 0; // loop counter
 	int year; // used to loop through the years
@@ -268,7 +278,7 @@ static int isAlreadyAdded(int *alreadyAdded, int numPassengers, int passportNumb
 
 // method only run from this file: shows the report using the supplied data
 // Called from TravelClass and BornBefore Report functions
-static void showReport(
+static void showSaveReport(
 	int totalCount,
 	int countUK,
 	int countEurope,
@@ -279,38 +289,71 @@ static void showReport(
 	int countOneDay,
 	int countLessThanThreeDays,
 	int countLessThanSevenDays,
-	int countMoreThanSevenDays
+	int countMoreThanSevenDays,
+
+	char reportTitle[100],
+
+	int saveToFile // if 1, also save report to file
 ) {
+	FILE* reportFilePtr = NULL;
 
-	float totalPercent = 100.0f;
-	float percentUK = 0;
-	float percentEurope = 0;
-	float percentAsia = 0;
-	float percentAfrica = 0;
-	float percentAmericas = 0;
-	float percentAustralasia = 0;
-	float percentOneDay = 0;
-	float percentLessThanThreeDays = 0;
-	float percentLessThanSevenDays = 0;
-	float percentMoreThanSevenDays = 0;
+	float percentUK = calculatePercentage(countUK, totalCount);
+	float percentEurope = calculatePercentage(countEurope, totalCount);
+	float percentAsia = calculatePercentage(countAsia, totalCount);
+	float percentAfrica = calculatePercentage(countAfrica, totalCount);
+	float percentAmericas = calculatePercentage(countAmericas, totalCount);
+	float percentAustralasia = calculatePercentage(countAustralasia, totalCount);
+	float percentOneDay = calculatePercentage(countOneDay, totalCount);
+	float percentLessThanThreeDays = calculatePercentage(countLessThanThreeDays, totalCount);
+	float percentLessThanSevenDays = calculatePercentage(countLessThanSevenDays, totalCount);
+	float percentMoreThanSevenDays = calculatePercentage(countMoreThanSevenDays, totalCount);
 
-	printf("\t|-------------------------------------------------------------------------\n");
-	printf("\t|   All figures shown as percentages (two decimal places)\n");
-	printf("\t|-------------------------------------------------------------------------\n");
+	char lineBreak[100] = "\n\t|-------------------------------------------------------------------------\n";
+	printf("%s", lineBreak);
+	printf("\t| %s", reportTitle);
+	printf("%d matches", totalCount);
+	printf("%s", lineBreak);
 	printf("\t|   Area travelled from:\n");
-	printf("\t|            UK: %.2f\n", (float)countUK / (float)totalCount * totalPercent);
-	printf("\t|        Europe: %.2f\n", (float)countEurope / (float)totalCount * totalPercent);
-	printf("\t|          Asia: %.2f\n", (float)countAsia / (float)totalCount * totalPercent);
-	printf("\t|        Africa: %.2f\n", (float)countAfrica / (float)totalCount * totalPercent);
-	printf("\t|      Americas: %.2f\n", (float)countAmericas / (float)totalCount * totalPercent);
-	printf("\t|   Australasia: %.2f\n", (float)countAustralasia / (float)totalCount * totalPercent);
-	printf("\t|-------------------------------------------------------------------------\n");
+	printf("\t|            UK: %.2f\n", percentUK);
+	printf("\t|        Europe: %.2f\n", percentEurope);
+	printf("\t|          Asia: %.2f\n", percentAsia);
+	printf("\t|        Africa: %.2f\n", percentAfrica);
+	printf("\t|      Americas: %.2f\n", percentAmericas);
+	printf("\t|   Australasia: %.2f", percentAustralasia);
+	printf("%s", lineBreak);
 	printf("\t|   Average Trip duration:\n");
-	printf("\t|       One Day: %.2f\n", (float)countOneDay / (float)totalCount * totalPercent);
-	printf("\t|      < 3 Days: %.2f\n", (float)countLessThanThreeDays / (float)totalCount * totalPercent);
-	printf("\t|      < 7 Days: %.2f\n", (float)countLessThanSevenDays / (float)totalCount * totalPercent);
-	printf("\t|      > 7 Days: %.2f\n", (float)countMoreThanSevenDays / (float)totalCount * totalPercent);
-	printf("\t|-------------------------------------------------------------------------\n");
+	printf("\t|       One Day: %.2f\n", percentOneDay);
+	printf("\t|      < 3 Days: %.2f\n", percentLessThanThreeDays);
+	printf("\t|      < 7 Days: %.2f\n", percentLessThanSevenDays);
+	printf("\t|      > 7 Days: %.2f", percentMoreThanSevenDays);
+	printf("%s", lineBreak);
 	printf("\n");
 
+	if (saveToFile == 1) {
+		reportFilePtr = fopen("report.txt", "w");
+		if (reportFilePtr != NULL) {
+			fprintf(reportFilePtr, "%s", lineBreak);
+			fprintf(reportFilePtr, "%s", lineBreak);
+			fprintf(reportFilePtr, "\t|   Area travelled from:\n");
+			fprintf(reportFilePtr, "\t|            UK: %.2f\n", percentUK);
+			fprintf(reportFilePtr, "\t|        Europe: %.2f\n", percentEurope);
+			fprintf(reportFilePtr, "\t|          Asia: %.2f\n", percentAsia);
+			fprintf(reportFilePtr, "\t|        Africa: %.2f\n", percentAfrica);
+			fprintf(reportFilePtr, "\t|      Americas: %.2f\n", percentAmericas);
+			fprintf(reportFilePtr, "\t|   Australasia: %.2f\n", percentAustralasia);
+			fprintf(reportFilePtr, "%s", lineBreak);
+			fprintf(reportFilePtr, "\t|   Average Trip duration:\n");
+			fprintf(reportFilePtr, "\t|       One Day: %.2f\n", percentOneDay);
+			fprintf(reportFilePtr, "\t|      < 3 Days: %.2f\n", percentLessThanThreeDays);
+			fprintf(reportFilePtr, "\t|      < 7 Days: %.2f\n", percentLessThanSevenDays);
+			fprintf(reportFilePtr, "\t|      > 7 Days: %.2f\n", percentMoreThanSevenDays);
+			fprintf(reportFilePtr, "%s", lineBreak);
+			fprintf(reportFilePtr, "\n");
+		}
+		reportFilePtr = NULL;
+	}
+}
+
+static float calculatePercentage(int count, int totalCount) {
+	return (float)count / (float)totalCount * TOTAL_PERCENT;
 }

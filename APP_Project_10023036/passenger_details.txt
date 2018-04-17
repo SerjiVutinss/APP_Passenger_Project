@@ -4,20 +4,9 @@
 	|          Last Name: wkjquiu
 	|          Year Born: 2011
 	|              Email: kjwhdkjwqh
-	|     Travelled From: U.K.
+	|     Travelled From: Rest of Europe
 	|       Travel Class: Premium Economy
 	|     Trips Per Year: Less than 3 times
-	| Avg. Trip Duration: Less than 3 days
-
-	|-------------------------------------------------------------------------
-	|    Passport Number: 123
-	|         First Name: jhkjh
-	|          Last Name: jajaja
-	|          Year Born: 1998
-	|              Email: jkhkjwh@gmail.com
-	|     Travelled From: U.K.
-	|       Travel Class: Premium Economy
-	|     Trips Per Year: More than 5 times
 	| Avg. Trip Duration: Less than 3 days
 
 	|-------------------------------------------------------------------------
@@ -26,9 +15,9 @@
 	|          Last Name: xxcvx
 	|          Year Born: 1997
 	|              Email: fdsfsdf
-	|     Travelled From: U.K.
+	|     Travelled From: Rest of Europe
 	|       Travel Class: Economy
-	|     Trips Per Year: 
+	|     Trips Per Year: More than 5 times
 	| Avg. Trip Duration: More than 7 days
 
 	|-------------------------------------------------------------------------
@@ -37,8 +26,8 @@
 	|          Last Name: lelelelrleeee
 	|          Year Born: 1999
 	|              Email: sdsda
-	|     Travelled From: U.K.
-	|       Travel Class: Economy
+	|     Travelled From: Rest of Europe
+	|       Travel Class: Premium Economy
 	|     Trips Per Year: More than 5 times
 	| Avg. Trip Duration: More than 7 days
 
@@ -48,9 +37,20 @@
 	|          Last Name: cvcxvxc
 	|          Year Born: 1999
 	|              Email: efrefer
-	|     Travelled From: U.K.
+	|     Travelled From: Rest of Europe
 	|       Travel Class: Premium Economy
 	|     Trips Per Year: Less than 3 times
+	| Avg. Trip Duration: One day
+
+	|-------------------------------------------------------------------------
+	|    Passport Number: 321
+	|         First Name: jwjwjwjw
+	|          Last Name: sslsoslsosjs
+	|          Year Born: 1967
+	|              Email: kejejsjs@cmmdd.com
+	|     Travelled From: Rest of Europe
+	|       Travel Class: Premium Economy
+	|     Trips Per Year: More than 5 times
 	| Avg. Trip Duration: One day
 
 	|-------------------------------------------------------------------------
@@ -60,7 +60,7 @@
 	|          Year Born: 1999
 	|              Email: zzzzzzzzzzzzzz
 	|     Travelled From: Rest of Europe
-	|       Travel Class: Business Class
+	|       Travel Class: Premium Economy
 	|     Trips Per Year: Less than 3 times
 	| Avg. Trip Duration: One day
 
@@ -82,29 +82,73 @@
 	|          Year Born: 1978
 	|              Email: lk@hdhd.com
 	|     Travelled From: Rest of Europe
-	|       Travel Class: Business Class
+	|       Travel Class: Premium Economy
 	|     Trips Per Year: More than 5 times
 	| Avg. Trip Duration: More than 7 days
+
+	|-------------------------------------------------------------------------
+	|    Passport Number: 1234
+	|         First Name: jajaja
+	|          Last Name: kekekeke
+	|          Year Born: 1987
+	|              Email: sdsds@sdsd.com
+	|     Travelled From: Rest of Europe
+	|       Travel Class: Premium Economy
+	|     Trips Per Year: Less than 3 times
+	| Avg. Trip Duration: One day
 
 	|-------------------------------------------------------------------------
 	|    Passport Number: 2121
 	|         First Name: sdsaa
 	|          Last Name: xcxxqw
 	|          Year Born: 1978
-	|              Email: dwdqd
+	|              Email: shdksjhd@dssd.com
+	|     Travelled From: U.K.
+	|       Travel Class: Economy
+	|     Trips Per Year: Less than 3 times
+	| Avg. Trip Duration: One day
+
+	|-------------------------------------------------------------------------
+	|    Passport Number: 2321
+	|         First Name: ajhaha
+	|          Last Name: assqsq
+	|          Year Born: 1967
+	|              Email: sdsda@fdsfds.com
+	|     Travelled From: U.K.
+	|       Travel Class: Premium Economy
+	|     Trips Per Year: More than 5 times
+	| Avg. Trip Duration: One day
+
+	|-------------------------------------------------------------------------
+	|    Passport Number: 4332
+	|         First Name: dsdsee
+	|          Last Name: reerww
+	|          Year Born: 1983
+	|              Email: jdjwjw@fsaks.com
 	|     Travelled From: U.K.
 	|       Travel Class: Premium Economy
 	|     Trips Per Year: More than 5 times
 	| Avg. Trip Duration: More than 7 days
 
 	|-------------------------------------------------------------------------
-	|    Passport Number: 99999
-	|         First Name: wwwwww
-	|          Last Name: eeeeee
-	|          Year Born: 1976
-	|              Email: pppppppppp
+	|    Passport Number: 5132
+	|         First Name: sjds
+	|          Last Name: sdsds
+	|          Year Born: 1998
+	|              Email: dsjhs@sds.com
 	|     Travelled From: U.K.
-	|       Travel Class: Economy
-	|     Trips Per Year: Less than 5 times
+	|       Travel Class: Premium Economy
+	|     Trips Per Year: More than 5 times
 	| Avg. Trip Duration: Less than 3 days
+
+	|-------------------------------------------------------------------------
+	|    Passport Number: 7373
+	|         First Name: kjhahjqh
+	|          Last Name: kjhwjhq
+	|          Year Born: 1953
+	|              Email: kjhdskjhd@dsada.com
+	|     Travelled From: U.K.
+	|       Travel Class: Premium Economy
+	|     Trips Per Year: More than 5 times
+	| Avg. Trip Duration: One day
 

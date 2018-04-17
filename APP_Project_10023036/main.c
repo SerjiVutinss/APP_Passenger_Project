@@ -62,6 +62,7 @@ int main() {
 	int searchType = 0;
 	int reportType = 0;
 	int travelClassType = 0;
+	int printReportToFile = 0;
 	//// END Variable Declarations
 
 
@@ -202,7 +203,25 @@ int main() {
 				scanf(" %s", userInput); // get the input
 				reportType = stringToInt(userInput); // returns 0 if cannot convert to int
 
+				// selection was valid
 				if (reportType == 1) {
+
+					do {
+						// ask if the report should also be saved to file ?
+						printf("Would you also like to save the report to file?\n");
+						printf("1. Yes\n");
+						printf("2. No\n");
+						scanf(" %s", userInput);
+						printReportToFile = stringToInt(userInput);
+
+						// check if the input was valid
+						if (printReportToFile < 1 || printReportToFile > 2) {
+							printf("That was not a valid selection, please try again\n"); // loop
+						}
+					} while (printReportToFile < 1 || printReportToFile > 2);
+
+					// must have gotten out of loop with 1 or 2
+
 					// by travel class
 					do {
 						printf("Please select the travel class:\n");
@@ -221,10 +240,10 @@ int main() {
 					} while (travelClassType < 1 || travelClassType > NUM_TRAVEL_CLASSES);
 
 					// valid travel class selected - run report - reports.h/c
-					runTravelClassReports(headPtr, travelClassType);
+					runTravelClassReports(headPtr, travelClassType, printReportToFile);
 				}
 				else if (reportType == 2) { // born before 1980
-					runBornBeforeReport(headPtr); // show the relevant report - reports.h/c
+					runBornBeforeReport(headPtr, printReportToFile); // show the relevant report - reports.h/c
 				}
 				else { // number was neither 1 nor 2, keep looping
 					printf("\nAn invalid number was entered, aborting\n");
@@ -239,7 +258,7 @@ int main() {
 			break;
 		case 8:
 			printf("List all passengers travelling from the U.K. in order of their birth year\n");
-			runOrderedUKYearOfBirthReport(headPtr); // reports.h/c
+			runOrderedUKYearOfBirthReport(headPtr, printReportToFile); // reports.h/c
 			break;
 		case -1:
 			printf("Exiting\n");
