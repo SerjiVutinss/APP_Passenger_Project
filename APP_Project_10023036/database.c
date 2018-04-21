@@ -167,12 +167,12 @@ void displayList(struct Passenger* head) {
 
 // backup all passenger information to "database.txt"
 void backup(struct Passenger* head) {
-	printf("\nOpening DB!!!\n");
+
+	int count = 0; // keep a count of passengers backed up
 	struct Passenger* curr = NULL; // pointer to current passenger
 
 	dbFilePtr = fopen("database.txt", "w"); // open the database file
 	if (dbFilePtr != NULL) { // ensure the file pointer was assigned
-		printf("\nDatabase File Opened!!!\n");
 
 		curr = head; // set the current equal to the head
 
@@ -195,25 +195,26 @@ void backup(struct Passenger* head) {
 				);
 
 				// print to show each passenger saved
-				printf("\nPassenger passport# %d backed up", curr->passportNumber);
+				if (DEBUG_ON) {
+					printf("\nPassenger passport# %d backed up", curr->passportNumber);
+				}
 
 				if (curr != NULL) { // begin a new line after all but the last passenger
 					fprintf(dbFilePtr, "\n");
 				}
 				curr = curr->NEXT; // move along the list
+				count++;
 			}
-			printf("\nAll database records saved\n"); // finished displaying
+			printf("\n%d database records saved to 'database.txt'", count); // finished displaying
 			fclose(dbFilePtr); // close the file
-			printf("\nDatabase File Closed!!!\n");
 		}
 		else { // curr was NULL, i.e. linked list is empty
 			printf("The database is empty, nothing to save\n"); // no records found
 			fclose(dbFilePtr); // close the file
-			printf("\nDatabase File Closed!!!\n");
 		}
 	}
 	else { // file pointer was NULL
-		printf("File could not be opened\n"); // no records found
+		printf("File 'database.txt' could not be opened\n"); // no records found
 	}
 	dbFilePtr = NULL; // set the file pointer to NULL regardless
 }
@@ -230,7 +231,7 @@ void restore(struct Passenger** head) {
 											// TODO: HANDLE EMPTY FILE
 
 	if (dbFilePtr != NULL) { // if file has been opened
-		printf("\nDatabase File Opened!!!\n");
+		//printf("\nDatabase File Opened!!!\n");
 
 		while (!feof(dbFilePtr)) { // while we are not at the end of the file
 
@@ -274,12 +275,11 @@ void restore(struct Passenger** head) {
 
 // save all passenger details in readable report format to "passenger_details.txt"
 void saveDetailsToFile(struct Passenger* head) {
-	printf("\nOpening DB!!!\n");
+
 	struct Passenger* curr = NULL; // pointer to current passenger
 
 	reportFilePtr = fopen("passenger_details.txt", "w");
 	if (reportFilePtr != NULL) {
-		printf("\nDetails File Opened!!!\n");
 
 		curr = head; // set the current equal to the head
 
@@ -300,25 +300,30 @@ void saveDetailsToFile(struct Passenger* head) {
 				fprintf(reportFilePtr, "\t|     Trips Per Year: %s\n", tripsPerYear[curr->tripsPerYear].message);
 				fprintf(reportFilePtr, "\t| Avg. Trip Duration: %s\n", tripDuration[curr->tripAvgDuration].message);
 
-
-				printf("\nPassenger passport# %d saved to details file", curr->passportNumber);
-				if (curr != NULL) {
-					fprintf(reportFilePtr, "\n");
+				if (DEBUG_ON) {
+					printf("\nPassenger passport# %d saved to details file", curr->passportNumber);
+					if (curr != NULL) {
+						fprintf(reportFilePtr, "\n");
+					}
 				}
 				curr = curr->NEXT; // move along the list
 			}
-			printf("\nAll details saved to file\n"); // finished displaying
+			printf("\nAll details saved to file 'passenger_details.txt'\n"); // finished displaying
 			fclose(reportFilePtr);
-			printf("\nDetails File Closed!!!\n");
+			if (DEBUG_ON) {
+				printf("\nDetails File Closed!!!\n");
+			}
 		}
 		else {
 			printf("The database is empty, nothing to save to details file\n"); // no records found
 			fclose(reportFilePtr);
-			printf("\nDetails File Closed!!!\n");
+			if (DEBUG_ON) {
+				printf("\nDetails File Closed!!!\n");
+			}
 		}
 	}
 	else {
-		printf("File could not be opened\n"); // no records found
+		printf("File 'passenger_details.txt' could not be opened\n"); // no records found
 	}
 	reportFilePtr = NULL;
 }

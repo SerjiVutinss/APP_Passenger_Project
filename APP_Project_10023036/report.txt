@@ -1,55 +1,19 @@
 
 	|-------------------------------------------------------------------------
+	| Showing Travel Class Report for Premium Economy: 12 matches
+	|-------------------------------------------------------------------------
+	|   Area travelled from:
+	|            UK: 33.33
+	|        Europe: 66.67
+	|          Asia: 0.00
+	|        Africa: 0.00
+	|      Americas: 0.00
+	|   Australasia: 0.00
+	|-------------------------------------------------------------------------
+	|   Average Trip duration:
+	|       One Day: 50.00
+	|      < 3 Days: 16.67
+	|      < 7 Days: 0.00
+	|      > 7 Days: 33.33
+	|-------------------------------------------------------------------------
 
-	| All passengers travelling from the UK in order of year born (ASC): 
-	|-------------------------------------------------------------------------
-	|    Passport Number: 7373
-	|         First Name: kjhahjqh
-	|          Last Name: kjhwjhq
-	|          Year Born: 1953
-	|              Email: kjhdskjhd@dsada.com
-	|     Travelled From: U.K.
-	|       Travel Class: Premium Economy
-	|     Trips Per Year: More than 5 times
-	| Avg. Trip Duration: One day
-	|-------------------------------------------------------------------------
-	|    Passport Number: 2321
-	|         First Name: ajhaha
-	|          Last Name: assqsq
-	|          Year Born: 1967
-	|              Email: sdsda@fdsfds.com
-	|     Travelled From: U.K.
-	|       Travel Class: Premium Economy
-	|     Trips Per Year: More than 5 times
-	| Avg. Trip Duration: One day
-	|-------------------------------------------------------------------------
-	|    Passport Number: 2121
-	|         First Name: sdsaa
-	|          Last Name: xcxxqw
-	|          Year Born: 1978
-	|              Email: shdksjhd@dssd.com
-	|     Travelled From: U.K.
-	|       Travel Class: Economy
-	|     Trips Per Year: Less than 3 times
-	| Avg. Trip Duration: One day
-	|-------------------------------------------------------------------------
-	|    Passport Number: 4332
-	|         First Name: dsdsee
-	|          Last Name: reerww
-	|          Year Born: 1983
-	|              Email: jdjwjw@fsaks.com
-	|     Travelled From: U.K.
-	|       Travel Class: Premium Economy
-	|     Trips Per Year: More than 5 times
-	| Avg. Trip Duration: More than 7 days
-	|-------------------------------------------------------------------------
-	|    Passport Number: 5132
-	|         First Name: sjds
-	|          Last Name: sdsds
-	|          Year Born: 1998
-	|              Email: dsjhs@sds.com
-	|     Travelled From: U.K.
-	|       Travel Class: Premium Economy
-	|     Trips Per Year: More than 5 times
-	| Avg. Trip Duration: Less than 3 days
-	|-------------------------------------------------------------------------

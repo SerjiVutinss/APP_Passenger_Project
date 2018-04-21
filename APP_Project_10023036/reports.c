@@ -81,30 +81,30 @@ void runTravelClassReports(struct Passenger* head, int travelClassType, int save
 			curr = curr->NEXT; // move along the list
 		} // end while
 
-		if (totalCount > 0) { // only show report if there are matches
+		//if (totalCount > 0) { // only show report if there are matches
 
 
-			sprintf(reportTitle, "Showing Travel Class Report for %s: ", travelClasses[travelClassType].value); // show this report
+		sprintf(reportTitle, "Showing Travel Class Report for %s: ", travelClasses[travelClassType].value); // show this report
 
-			showSaveReport(
-				totalCount,
-				countUK,
-				countEurope,
-				countAsia,
-				countAfrica,
-				countAmericas,
-				countAustralasia,
-				countOneDay,
-				countLessThanThreeDays,
-				countLessThanSevenDays,
-				countMoreThanSevenDays,
-				reportTitle,
-				saveToFile
-			);
-		}
-		else { // no matches for this report and criteria
-			printf("\nNo matches for these criteria, nothing to display\n");
-		}
+		showSaveReport(
+			totalCount,
+			countUK,
+			countEurope,
+			countAsia,
+			countAfrica,
+			countAmericas,
+			countAustralasia,
+			countOneDay,
+			countLessThanThreeDays,
+			countLessThanSevenDays,
+			countMoreThanSevenDays,
+			reportTitle,
+			saveToFile
+		);
+		//}
+		//else { // no matches for this report and criteria
+		//	printf("\nNo matches for these criteria, nothing to display\n");
+		//}
 	}
 	else {
 		printf("The database is empty\n"); // no records found
@@ -187,30 +187,30 @@ void runBornBeforeReport(struct Passenger* head, int saveToFile) {
 			curr = curr->NEXT; // move along the list
 		} // end while
 
-		if (totalCount > 0) { // only show report if there were matches
+		//if (totalCount > 0) { // only show report if there were matches
 			//printf("\n\tShowing Report for passengers born before 1980: "); // show this report
 
-			sprintf(reportTitle, "Showing Report for passengers born before 1980: ");
+		sprintf(reportTitle, "Showing Report for passengers born before 1980: ");
 
-			showSaveReport(
-				totalCount,
-				countUK,
-				countEurope,
-				countAsia,
-				countAfrica,
-				countAmericas,
-				countAustralasia,
-				countOneDay,
-				countLessThanThreeDays,
-				countLessThanSevenDays,
-				countMoreThanSevenDays,
-				reportTitle,
-				saveToFile
-			);
-		}
-		else { // no matches for this report and criteria
-			printf("\nNo matches for these criteria, nothing to display\n");
-		}
+		showSaveReport(
+			totalCount,
+			countUK,
+			countEurope,
+			countAsia,
+			countAfrica,
+			countAmericas,
+			countAustralasia,
+			countOneDay,
+			countLessThanThreeDays,
+			countLessThanSevenDays,
+			countMoreThanSevenDays,
+			reportTitle,
+			saveToFile
+		);
+		//}
+		//else { // no matches for this report and criteria
+		//	printf("\nNo matches for these criteria, nothing to display\n");
+		//}
 	}
 	else {
 		printf("The database is empty\n"); // no records found
@@ -233,7 +233,7 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head, int saveToFile) {
 	struct Passenger* curr; // pointer to current passenger
 	curr = head; // set the current equal to the head
 
-	FILE* reportFilePtr = NULL;
+	//FILE* reportFilePtr = NULL;
 	char lineBreak[100] = "\n\t|-------------------------------------------------------------------------\n";
 	char reportTitle[100] = "All passengers travelling from the UK in order of year born (ASC): ";
 
@@ -241,14 +241,14 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head, int saveToFile) {
 	printf("\n\t| %s", reportTitle);
 	printf("%s", lineBreak);
 
-	if (saveToFile == 1) {
+	/*if (saveToFile == 1) {
 		reportFilePtr = fopen("report.txt", "w");
 		if (reportFilePtr != NULL) {
 			fprintf(reportFilePtr, "%s", lineBreak);
 			fprintf(reportFilePtr, "\n\t| %s", reportTitle);
 			fprintf(reportFilePtr, "%s", lineBreak);
 		}
-	}
+	}*/
 
 	if (curr != NULL) { // if list is not empty
 
@@ -267,37 +267,46 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head, int saveToFile) {
 							// passenger not already added
 							*(alreadyAdded + numAdded) = curr->passportNumber; // add to array
 
-							// and display the passenger's details (passenger.c)
-							displayPassenger(curr);
+							//// and save or display the passenger's details (passenger.c)
+							//if (saveToFile == 1) { // don't display, only save
+							//	if (reportFilePtr != NULL) {
+							//		fprintf(reportFilePtr, "\t|    Passport Number: %d\n", curr->passportNumber);
+							//		fprintf(reportFilePtr, "\t|         First Name: %s\n", curr->firstName);
+							//		fprintf(reportFilePtr, "\t|          Last Name: %s\n", curr->lastName);
+							//		fprintf(reportFilePtr, "\t|          Year Born: %d\n", curr->yearBorn);
+							//		fprintf(reportFilePtr, "\t|              Email: %s\n", curr->email);
 
-							if (reportFilePtr != NULL) {
-								fprintf(reportFilePtr, "\t|    Passport Number: %d\n", curr->passportNumber);
-								fprintf(reportFilePtr, "\t|         First Name: %s\n", curr->firstName);
-								fprintf(reportFilePtr, "\t|          Last Name: %s\n", curr->lastName);
-								fprintf(reportFilePtr, "\t|          Year Born: %d\n", curr->yearBorn);
-								fprintf(reportFilePtr, "\t|              Email: %s\n", curr->email);
-
-								// get item and print string from each array using the stored indices
-								fprintf(reportFilePtr, "\t|     Travelled From: %s\n", travelAreas[curr->travelledFrom].value);
-								fprintf(reportFilePtr, "\t|       Travel Class: %s\n", travelClasses[curr->travelClass].value);
-								fprintf(reportFilePtr, "\t|     Trips Per Year: %s\n", tripsPerYear[curr->tripsPerYear].message);
-								fprintf(reportFilePtr, "\t| Avg. Trip Duration: %s", tripDuration[curr->tripAvgDuration].message);
-								fprintf(reportFilePtr, "%s", lineBreak);
-							}
-							numAdded++; // increment so another passenger can be added
+							//		// get item and print string from each array using the stored indices
+							//		fprintf(reportFilePtr, "\t|     Travelled From: %s\n", travelAreas[curr->travelledFrom].value);
+							//		fprintf(reportFilePtr, "\t|       Travel Class: %s\n", travelClasses[curr->travelClass].value);
+							//		fprintf(reportFilePtr, "\t|     Trips Per Year: %s\n", tripsPerYear[curr->tripsPerYear].message);
+							//		fprintf(reportFilePtr, "\t| Avg. Trip Duration: %s", tripDuration[curr->tripAvgDuration].message);
+							//		fprintf(reportFilePtr, "%s", lineBreak);
+							//		numAdded++; // increment so another passenger can be added
+							//	}
+							//}
+							//else {
+								displayPassenger(curr);
+								numAdded++; // increment so another passenger can be added
+							//}
 						}
 					}
 				}
 				curr = curr->NEXT; // move the pointer along the list
 			}
 		}
-		if (reportFilePtr != NULL) {
-			fclose(reportFilePtr);
+		if (numAdded == 0) { // if no records match, inform user
+			/*if (saveToFile == 1) {
+				fprintf(reportFilePtr, "\nNothing to display for this report\n");
+			}
+			else {*/
+				printf("\nNothing to display for this report\n");
+			//}
 		}
-		if (numAdded == 0) {
-			printf("\nNothing to display for this report\n");
-		}
-		reportFilePtr = NULL;
+		//if (reportFilePtr != NULL) { // close file if open
+		//	fclose(reportFilePtr);
+		//}
+		//reportFilePtr = NULL;
 	}
 }
 
@@ -327,13 +336,12 @@ static void showSaveReport(
 	int countLessThanThreeDays,
 	int countLessThanSevenDays,
 	int countMoreThanSevenDays,
-
 	char reportTitle[100],
-
 	int saveToFile // if 1, also save report to file
 ) {
 	FILE* reportFilePtr = NULL;
 
+	// calculate the report statistics
 	float percentUK = calculatePercentage(countUK, totalCount);
 	float percentEurope = calculatePercentage(countEurope, totalCount);
 	float percentAsia = calculatePercentage(countAsia, totalCount);
@@ -346,51 +354,82 @@ static void showSaveReport(
 	float percentMoreThanSevenDays = calculatePercentage(countMoreThanSevenDays, totalCount);
 
 	char lineBreak[100] = "\n\t|-------------------------------------------------------------------------\n";
-	printf("%s", lineBreak);
-	printf("\t| %s", reportTitle);
-	printf("%d matches", totalCount);
-	printf("%s", lineBreak);
-	printf("\t|   Area travelled from:\n");
-	printf("\t|            UK: %.2f\n", percentUK);
-	printf("\t|        Europe: %.2f\n", percentEurope);
-	printf("\t|          Asia: %.2f\n", percentAsia);
-	printf("\t|        Africa: %.2f\n", percentAfrica);
-	printf("\t|      Americas: %.2f\n", percentAmericas);
-	printf("\t|   Australasia: %.2f", percentAustralasia);
-	printf("%s", lineBreak);
-	printf("\t|   Average Trip duration:\n");
-	printf("\t|       One Day: %.2f\n", percentOneDay);
-	printf("\t|      < 3 Days: %.2f\n", percentLessThanThreeDays);
-	printf("\t|      < 7 Days: %.2f\n", percentLessThanSevenDays);
-	printf("\t|      > 7 Days: %.2f", percentMoreThanSevenDays);
-	printf("%s", lineBreak);
-	printf("\n");
 
+	// only save to file
 	if (saveToFile == 1) {
 		reportFilePtr = fopen("report.txt", "w");
+
+		// make sure the file was opened correctly
 		if (reportFilePtr != NULL) {
-			fprintf(reportFilePtr, "%s", lineBreak);
-			fprintf(reportFilePtr, "\t| %s", reportTitle);
-			fprintf(reportFilePtr, "%d matches", totalCount);
-			fprintf(reportFilePtr, "%s", lineBreak);
-			fprintf(reportFilePtr, "\t|   Area travelled from:\n");
-			fprintf(reportFilePtr, "\t|            UK: %.2f\n", percentUK);
-			fprintf(reportFilePtr, "\t|        Europe: %.2f\n", percentEurope);
-			fprintf(reportFilePtr, "\t|          Asia: %.2f\n", percentAsia);
-			fprintf(reportFilePtr, "\t|        Africa: %.2f\n", percentAfrica);
-			fprintf(reportFilePtr, "\t|      Americas: %.2f\n", percentAmericas);
-			fprintf(reportFilePtr, "\t|   Australasia: %.2f", percentAustralasia);
-			fprintf(reportFilePtr, "%s", lineBreak);
-			fprintf(reportFilePtr, "\t|   Average Trip duration:\n");
-			fprintf(reportFilePtr, "\t|       One Day: %.2f\n", percentOneDay);
-			fprintf(reportFilePtr, "\t|      < 3 Days: %.2f\n", percentLessThanThreeDays);
-			fprintf(reportFilePtr, "\t|      < 7 Days: %.2f\n", percentLessThanSevenDays);
-			fprintf(reportFilePtr, "\t|      > 7 Days: %.2f", percentMoreThanSevenDays);
-			fprintf(reportFilePtr, "%s", lineBreak);
-			fprintf(reportFilePtr, "\n");
-			fclose(reportFilePtr);
+
+			// if there were no matches for the criteria
+			if (totalCount == 0) { 
+				// print message to file
+				fprintf(reportFilePtr, "Nothing to display for this report\n");
+			}
+			// print report to file
+			else {
+				
+				fprintf(reportFilePtr, "%s", lineBreak);
+				fprintf(reportFilePtr, "\t| %s", reportTitle);
+				fprintf(reportFilePtr, "%d matches", totalCount);
+				fprintf(reportFilePtr, "%s", lineBreak);
+				fprintf(reportFilePtr, "\t|   Area travelled from:\n");
+				fprintf(reportFilePtr, "\t|            UK: %.2f\n", percentUK);
+				fprintf(reportFilePtr, "\t|        Europe: %.2f\n", percentEurope);
+				fprintf(reportFilePtr, "\t|          Asia: %.2f\n", percentAsia);
+				fprintf(reportFilePtr, "\t|        Africa: %.2f\n", percentAfrica);
+				fprintf(reportFilePtr, "\t|      Americas: %.2f\n", percentAmericas);
+				fprintf(reportFilePtr, "\t|   Australasia: %.2f", percentAustralasia);
+				fprintf(reportFilePtr, "%s", lineBreak);
+				fprintf(reportFilePtr, "\t|   Average Trip duration:\n");
+				fprintf(reportFilePtr, "\t|       One Day: %.2f\n", percentOneDay);
+				fprintf(reportFilePtr, "\t|      < 3 Days: %.2f\n", percentLessThanThreeDays);
+				fprintf(reportFilePtr, "\t|      < 7 Days: %.2f\n", percentLessThanSevenDays);
+				fprintf(reportFilePtr, "\t|      > 7 Days: %.2f", percentMoreThanSevenDays);
+				fprintf(reportFilePtr, "%s", lineBreak);
+				fprintf(reportFilePtr, "\n");
+				fclose(reportFilePtr);
+			}
+
+			// inform the user that something was saved to the output file
+			printf("\nData saved to 'report.txt'\n");
 		}
-		reportFilePtr = NULL;
+		// file not opened
+		else {
+			printf("\nThere was a problem openeing the output file!\n");
+		}
+		reportFilePtr = NULL; // set to NULL regardless
+	}
+	// only print the report to screen
+	else {
+		// if there were no matches for the criteria
+		if (totalCount == 0) {
+			// print message to screen
+			printf("Nothing to display for this report\n");
+		}
+		// print report to screen
+		else {
+			printf("%s", lineBreak);
+			printf("\t| %s", reportTitle);
+			printf("%d matches", totalCount);
+			printf("%s", lineBreak);
+			printf("\t|   Area travelled from:\n");
+			printf("\t|            UK: %.2f\n", percentUK);
+			printf("\t|        Europe: %.2f\n", percentEurope);
+			printf("\t|          Asia: %.2f\n", percentAsia);
+			printf("\t|        Africa: %.2f\n", percentAfrica);
+			printf("\t|      Americas: %.2f\n", percentAmericas);
+			printf("\t|   Australasia: %.2f", percentAustralasia);
+			printf("%s", lineBreak);
+			printf("\t|   Average Trip duration:\n");
+			printf("\t|       One Day: %.2f\n", percentOneDay);
+			printf("\t|      < 3 Days: %.2f\n", percentLessThanThreeDays);
+			printf("\t|      < 7 Days: %.2f\n", percentLessThanSevenDays);
+			printf("\t|      > 7 Days: %.2f", percentMoreThanSevenDays);
+			printf("%s", lineBreak);
+			printf("\n");
+		}
 	}
 }
 

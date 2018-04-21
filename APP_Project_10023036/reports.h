@@ -39,6 +39,8 @@ static void showSaveReport(
 	int countLessThanSevenDays,
 	int countMoreThanSevenDays,
 
+	char reportTitle[100],
+
 	int saveToFile
 );
 

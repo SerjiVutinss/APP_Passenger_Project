@@ -39,6 +39,7 @@
 
 // prototype - function to displaya a sub menu, details in function comments
 int menuDisplayUpdate(struct Passenger* headPtr, int type);
+void menuReports(struct Passenger* headPtr, int saveReportToFile);
 
 // main function
 int main() {
@@ -194,85 +195,31 @@ int main() {
 			break;
 		case 6:
 			printf("Display Reports\n");
+			menuReports(headPtr, 0); // pass in 0 to only display reports, not save
 
-			do { // loop until valid input received
-				printf("Which set of reports would you like to see?\n");
-				printf("1. Travel Class\n");
-				printf("2. Born Before 1980\n");
-				printf("Please select: ");
-				scanf(" %s", userInput); // get the input
-				reportType = stringToInt(userInput); // returns 0 if cannot convert to int
-
-				// selection was valid
-				if (reportType == 1) {
-
-					do {
-						// ask if the report should also be saved to file ?
-						printf("Would you also like to save the report to file?\n");
-						printf("1. Yes\n");
-						printf("2. No\n");
-						printf("Please select: ");
-						scanf(" %s", userInput);
-						printReportToFile = stringToInt(userInput);
-
-						// check if the input was valid
-						if (printReportToFile < 1 || printReportToFile > 2) {
-							printf("That was not a valid selection, please try again\n"); // loop
-						}
-					} while (printReportToFile < 1 || printReportToFile > 2);
-
-					// must have gotten out of loop with 1 or 2
-
-					// by travel class
-					do {
-						printf("Please select the travel class:\n");
-						for (i = 0; i < NUM_TRAVEL_CLASSES; i++) {
-							printf("%d. %s\n", i + 1, travelClasses[i].value);
-						}
-						printf("Please select: ");
-						scanf(" %s", userInput); // get the input
-						travelClassType = stringToInt(userInput); // returns 0 if cannot convert to int
-
-						// validate input was a list option
-						if (travelClassType < 1 || travelClassType > NUM_TRAVEL_CLASSES) {
-							printf("That was not a valid selection, please try again\n"); // loop
-						}
-
-					} while (travelClassType < 1 || travelClassType > NUM_TRAVEL_CLASSES);
-
-					// valid travel class selected - run report - reports.h/c
-					runTravelClassReports(headPtr, travelClassType, printReportToFile);
-				}
-				else if (reportType == 2) { // born before 1980
-					runBornBeforeReport(headPtr, printReportToFile); // show the relevant report - reports.h/c
-				}
-				else { // number was neither 1 nor 2, keep looping
-					printf("\nAn invalid number was entered, aborting\n");
-				}
-
-			} while (reportType < 1 || reportType > 2); // loop condition for 2 options
 			break;
 
 		case 7:
 			printf("Save all details to file\n");
 			saveDetailsToFile(headPtr); // database.h/c
+			menuReports(headPtr, 1); // run report menu and save to file
 			break;
 		case 8:
 			printf("List all passengers travelling from the U.K. in order of their birth year\n");
-			do {
+			//do {
 
-				printf("Would you also like to save this report to file after viewing?\n");
-				printf("1. Yes\n");
-				printf("2. No\n");
-				printf("Please select: ");
-				scanf(" %s", userInput);
-				printReportToFile = stringToInt(userInput);
+			//	printf("Would you also like to save this report to file after viewing?\n");
+			//	printf("1. Yes\n");
+			//	printf("2. No\n");
+			//	printf("Please select: ");
+			//	scanf(" %s", userInput);
+			//	printReportToFile = stringToInt(userInput);
 
-				if (printReportToFile < 1 || printReportToFile>2) {
-					printf("That was not a valid selection, please try again\n"); // loop
-				}
+			//	if (printReportToFile < 1 || printReportToFile>2) {
+			//		printf("That was not a valid selection, please try again\n"); // loop
+			//	}
 
-			} while (printReportToFile < 1 || printReportToFile>2);
+			//} while (printReportToFile < 1 || printReportToFile>2);
 
 			runOrderedUKYearOfBirthReport(headPtr, printReportToFile); // reports.h/c
 			break;
@@ -362,4 +309,51 @@ int menuDisplayUpdate(struct Passenger* headPtr, int type) {
 
 	} while (searchType < 1 || searchType > 2); // validate the user's choice
 	searchType = 0; // reset this variable
+}
+
+void menuReports(struct Passenger* headPtr, int saveReportToFile) {
+
+	int travelClassType = 0;
+	int  reportType, i;
+	char userInput[USERNAME_MAX_LEN];
+
+	do { // loop until valid input received
+		printf("Which set of reports would you like to run?\n");
+		printf("1. Travel Class\n");
+		printf("2. Born Before 1980\n");
+		printf("Please select: ");
+		scanf(" %s", userInput); // get the input
+		reportType = stringToInt(userInput); // returns 0 if cannot convert to int
+
+											 // selection was valid
+		if (reportType == 1) {
+
+			// by travel class
+			do {
+				printf("Please select the travel class:\n");
+				for (i = 0; i < NUM_TRAVEL_CLASSES; i++) {
+					printf("%d. %s\n", i + 1, travelClasses[i].value);
+				}
+				printf("Please select: ");
+				scanf(" %s", userInput); // get the input
+				travelClassType = stringToInt(userInput); // returns 0 if cannot convert to int
+
+														  // validate input was a list option
+				if (travelClassType < 1 || travelClassType > NUM_TRAVEL_CLASSES) {
+					printf("That was not a valid selection, please try again\n"); // loop
+				}
+
+			} while (travelClassType < 1 || travelClassType > NUM_TRAVEL_CLASSES);
+
+			// valid travel class selected - run report - reports.h/c
+			runTravelClassReports(headPtr, travelClassType, saveReportToFile);
+		}
+		else if (reportType == 2) { // born before 1980
+			runBornBeforeReport(headPtr, saveReportToFile); // show the relevant report - reports.h/c
+		}
+		else { // number was neither 1 nor 2, keep looping
+			printf("\nAn invalid number was entered, aborting\n");
+		}
+
+	} while (reportType < 1 || reportType > 2); // loop condition for 2 options
 }
