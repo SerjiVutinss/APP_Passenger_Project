@@ -12,7 +12,7 @@
 
 // Spec #6.I - Travel Class Report - takes in the user selected travelClassArray index and passes the 
 // calculated data to showReport()
-void runTravelClassReports(struct Passenger* head, int travelClassType, int saveToFile);
+void runTravelClassReport(struct Passenger* head, int travelClassType, int saveToFile);
 // Spec #6.II - Born Before 1980 Report - passes the calculated data to showReport() 
 // NOTE: Year is hardcoded in function as 1980 as per spec
 void runBornBeforeReport(struct Passenger* head, int saveToFile);

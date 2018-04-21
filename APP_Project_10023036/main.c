@@ -346,7 +346,7 @@ void menuReports(struct Passenger* headPtr, int saveReportToFile) {
 			} while (travelClassType < 1 || travelClassType > NUM_TRAVEL_CLASSES);
 
 			// valid travel class selected - run report - reports.h/c
-			runTravelClassReports(headPtr, travelClassType, saveReportToFile);
+			runTravelClassReport(headPtr, travelClassType, saveReportToFile);
 		}
 		else if (reportType == 2) { // born before 1980
 			runBornBeforeReport(headPtr, saveReportToFile); // show the relevant report - reports.h/c

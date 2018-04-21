@@ -2,6 +2,7 @@
 #include "structs.h"
 #include "passenger.h"
 #include "database.h"
+#include "validation.h"
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -9,7 +10,7 @@
 
 // Spec #6.I - Travel Class Report - takes in the user selected travelClassArray index and passes the 
 // calculated data to showReport()
-void runTravelClassReports(struct Passenger* head, int travelClassType, int saveToFile) {
+void runTravelClassReport(struct Passenger* head, int travelClassType, int saveToFile) {
 
 	int totalCount = 0;
 	int countUK = 0;
@@ -254,7 +255,7 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head, int saveToFile) {
 
 		// for each year, loop through the linked list
 		// assuming valid years of birth are 1900-2050 to limit number of loops
-		for (year = 1900; year <= 2050; year++) {
+		for (year = MIN_YEAR; year <= getCurrentYear() + 1; year++) {
 			curr = head;
 			while (curr != NULL) { // while we are not at the end of the list
 
@@ -286,6 +287,7 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head, int saveToFile) {
 							//	}
 							//}
 							//else {
+							printf("\n\t| Year: %d\n", curr->yearBorn);
 								displayPassenger(curr);
 								numAdded++; // increment so another passenger can be added
 							//}
