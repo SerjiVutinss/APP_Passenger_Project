@@ -9,10 +9,20 @@
 	|     Trips Per Year: Less than 3 times
 	| Avg. Trip Duration: Less than 3 days
 	|-------------------------------------------------------------------------
+	|    Passport Number: 87
+	|         First Name: aaaaa
+	|          Last Name: bbbbbb
+	|          Year Born: 1905
+	|              Email: kjhkjhjh@cmcmmc.com
+	|     Travelled From: Asia
+	|       Travel Class: First Class
+	|     Trips Per Year: More than 5 times
+	| Avg. Trip Duration: Less than 7 days
+	|-------------------------------------------------------------------------
 	|    Passport Number: 213
 	|         First Name: eqew
 	|          Last Name: xxcvx
-	|          Year Born: 1997
+	|          Year Born: 1907
 	|              Email: fdsfsdf
 	|     Travelled From: Rest of Europe
 	|       Travel Class: Economy

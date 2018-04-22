@@ -1,19 +1,19 @@
 
 	|-------------------------------------------------------------------------
-	| Showing Travel Class Report for Premium Economy: 12 matches
+	| Showing Report for passengers born before 1980: 2 matches
 	|-------------------------------------------------------------------------
 	|   Area travelled from:
-	|            UK: 33.33
-	|        Europe: 66.67
-	|          Asia: 0.00
+	|            UK: 0.00
+	|        Europe: 50.00
+	|          Asia: 50.00
 	|        Africa: 0.00
 	|      Americas: 0.00
 	|   Australasia: 0.00
 	|-------------------------------------------------------------------------
 	|   Average Trip duration:
-	|       One Day: 50.00
-	|      < 3 Days: 16.67
-	|      < 7 Days: 0.00
-	|      > 7 Days: 33.33
+	|       One Day: 0.00
+	|      < 3 Days: 0.00
+	|      < 7 Days: 50.00
+	|      > 7 Days: 50.00
 	|-------------------------------------------------------------------------
 

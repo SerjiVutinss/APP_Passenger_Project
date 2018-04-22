@@ -242,15 +242,6 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head, int saveToFile) {
 	printf("\n\t| %s", reportTitle);
 	printf("%s", lineBreak);
 
-	/*if (saveToFile == 1) {
-		reportFilePtr = fopen("report.txt", "w");
-		if (reportFilePtr != NULL) {
-			fprintf(reportFilePtr, "%s", lineBreak);
-			fprintf(reportFilePtr, "\n\t| %s", reportTitle);
-			fprintf(reportFilePtr, "%s", lineBreak);
-		}
-	}*/
-
 	if (curr != NULL) { // if list is not empty
 
 		// for each year, loop through the linked list
@@ -268,29 +259,9 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head, int saveToFile) {
 							// passenger not already added
 							*(alreadyAdded + numAdded) = curr->passportNumber; // add to array
 
-							//// and save or display the passenger's details (passenger.c)
-							//if (saveToFile == 1) { // don't display, only save
-							//	if (reportFilePtr != NULL) {
-							//		fprintf(reportFilePtr, "\t|    Passport Number: %d\n", curr->passportNumber);
-							//		fprintf(reportFilePtr, "\t|         First Name: %s\n", curr->firstName);
-							//		fprintf(reportFilePtr, "\t|          Last Name: %s\n", curr->lastName);
-							//		fprintf(reportFilePtr, "\t|          Year Born: %d\n", curr->yearBorn);
-							//		fprintf(reportFilePtr, "\t|              Email: %s\n", curr->email);
-
-							//		// get item and print string from each array using the stored indices
-							//		fprintf(reportFilePtr, "\t|     Travelled From: %s\n", travelAreas[curr->travelledFrom].value);
-							//		fprintf(reportFilePtr, "\t|       Travel Class: %s\n", travelClasses[curr->travelClass].value);
-							//		fprintf(reportFilePtr, "\t|     Trips Per Year: %s\n", tripsPerYear[curr->tripsPerYear].message);
-							//		fprintf(reportFilePtr, "\t| Avg. Trip Duration: %s", tripDuration[curr->tripAvgDuration].message);
-							//		fprintf(reportFilePtr, "%s", lineBreak);
-							//		numAdded++; // increment so another passenger can be added
-							//	}
-							//}
-							//else {
 							printf("\n\t| Year: %d\n", curr->yearBorn);
-								displayPassenger(curr);
-								numAdded++; // increment so another passenger can be added
-							//}
+							displayPassenger(curr);
+							numAdded++; // increment so another passenger can be added
 						}
 					}
 				}
@@ -298,17 +269,8 @@ void runOrderedUKYearOfBirthReport(struct Passenger* head, int saveToFile) {
 			}
 		}
 		if (numAdded == 0) { // if no records match, inform user
-			/*if (saveToFile == 1) {
-				fprintf(reportFilePtr, "\nNothing to display for this report\n");
-			}
-			else {*/
-				printf("\nNothing to display for this report\n");
-			//}
+			printf("\nNothing to display for this report\n");
 		}
-		//if (reportFilePtr != NULL) { // close file if open
-		//	fclose(reportFilePtr);
-		//}
-		//reportFilePtr = NULL;
 	}
 }
 
@@ -365,13 +327,13 @@ static void showSaveReport(
 		if (reportFilePtr != NULL) {
 
 			// if there were no matches for the criteria
-			if (totalCount == 0) { 
+			if (totalCount == 0) {
 				// print message to file
 				fprintf(reportFilePtr, "Nothing to display for this report\n");
 			}
 			// print report to file
 			else {
-				
+
 				fprintf(reportFilePtr, "%s", lineBreak);
 				fprintf(reportFilePtr, "\t| %s", reportTitle);
 				fprintf(reportFilePtr, "%d matches", totalCount);

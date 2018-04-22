@@ -206,21 +206,6 @@ int main() {
 			break;
 		case 8:
 			printf("List all passengers travelling from the U.K. in order of their birth year\n");
-			//do {
-
-			//	printf("Would you also like to save this report to file after viewing?\n");
-			//	printf("1. Yes\n");
-			//	printf("2. No\n");
-			//	printf("Please select: ");
-			//	scanf(" %s", userInput);
-			//	printReportToFile = stringToInt(userInput);
-
-			//	if (printReportToFile < 1 || printReportToFile>2) {
-			//		printf("That was not a valid selection, please try again\n"); // loop
-			//	}
-
-			//} while (printReportToFile < 1 || printReportToFile>2);
-
 			runOrderedUKYearOfBirthReport(headPtr, printReportToFile); // reports.h/c
 			break;
 		case -1:
@@ -325,7 +310,6 @@ void menuReports(struct Passenger* headPtr, int saveReportToFile) {
 		scanf(" %s", userInput); // get the input
 		reportType = stringToInt(userInput); // returns 0 if cannot convert to int
 
-											 // selection was valid
 		if (reportType == 1) {
 
 			// by travel class
@@ -338,7 +322,7 @@ void menuReports(struct Passenger* headPtr, int saveReportToFile) {
 				scanf(" %s", userInput); // get the input
 				travelClassType = stringToInt(userInput); // returns 0 if cannot convert to int
 
-														  // validate input was a list option
+				// validate input was a list option
 				if (travelClassType < 1 || travelClassType > NUM_TRAVEL_CLASSES) {
 					printf("That was not a valid selection, please try again\n"); // loop
 				}
